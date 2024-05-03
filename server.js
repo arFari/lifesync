@@ -14,6 +14,7 @@ const PORT_NUMBER = 8000;
 const server = require("http").Server(app);
 
 const scheduleItemRouter = require("./backend/routes/schedule-item-routes");
+const userRouter = require("./backend/routes/user-routes");
 
 app.use(bodyParser.urlencoded({
     extended: true
@@ -36,6 +37,7 @@ server.listen(PORT_NUMBER, () => {
 app.use(express.json());
 
 app.use("/api/schedule-item", scheduleItemRouter);
+app.use("/api/user", userRouter);
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, './dist/webhack/index.html'));

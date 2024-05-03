@@ -9,24 +9,21 @@ const itemSchema = mongoose.Schema({
         }
 	},
 	name: {
-		type: String,
-		validate: {
-			validator: function (value) {
-                const alphanumeric = /[^a-zA-Z0-9\s]/g
-
-				return value.match(alphanumeric) == null;
-			},
-			message: "Name must be alphanumeric",
-		},
+		type: String
 	},
-    categories: {
-        type:[String]
-    },
     priority: {
 		type: Number
 	},
     date: {
 		type: Date
+	},
+	user_id: {
+		type: mongoose.Schema.Types.ObjectId, 
+		ref: 'User'
+	},
+	points: {
+		type: Number,
+		default: 10
 	},
     reminder: {
 		type: Boolean

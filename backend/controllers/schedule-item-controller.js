@@ -2,16 +2,9 @@ const Item = require("../models/schedule-item");
 const mongoose = require("mongoose");
 
 module.exports = {
-  /**
-   * Controller for creating a new category.
-   * @function
-   * @param {Object} req - Express request object.
-   * @param {Object} res - Express response object.
-   * @returns {void}
-   */
   newItem: async function (req, res) {
     try {
-      const {name, date, categories, priority, reminder} = req.body;
+      const {name, date, user_id, priority, reminder, points} = req.body;
       
       var a = categories;
       a = a.replace(/'/g, '"');
@@ -20,7 +13,8 @@ module.exports = {
       let schItem = new Item({
         name: name,
         date: date,
-        categories: a,
+        user_id: user_id,
+        points: points,
         priority: priority,
         reminder: reminder,
       });
@@ -37,13 +31,6 @@ module.exports = {
     }
   },
 
-  /**
-   * Controller for listing all categories.
-   * @function
-   * @param {Object} req - Express request object.
-   * @param {Object} res - Express response object.
-   * @returns {void}
-   */
   listItems: async function (req, res) {
     try {
       const schItems = await Item.find();
@@ -55,13 +42,6 @@ module.exports = {
     }
   },
 
-  /**
-   * Controller for listing one category.
-   * @function
-   * @param {Object} req - Express request object.
-   * @param {Object} res - Express response object.
-   * @returns {void}
-   */
   getItem: async function (req, res) {
     try {
       const schItemId = req.params.id;
@@ -75,13 +55,6 @@ module.exports = {
     }
   },
 
-  /**
-   * Controller for deleting a category.
-   * @function
-   * @param {Object} req - Express request object.
-   * @param {Object} res - Express response object.
-   * @returns {void}
-   */
   deleteItem: async function (req, res) {
     try {
       const schItemId = req.params.id;
@@ -109,25 +82,19 @@ module.exports = {
     }
   },
 
-  /**
-   * Controller for updating a category.
-   * @function
-   * @param {Object} req - Express request object.
-   * @param {Object} res - Express response object.
-   * @returns {void}
-   */
   updateItem: async function (req, res) {
     try {
-      const {id, name, date, category, priority, reminder} = req.body;
+      const {id, name, date, user_id, priority, reminder, points} = req.body;
 
       const schItem = await Item.updateOne(
         { id: id },
         { 
-            name: name,
-            date: date,
-            category: category,
-            priority: priority,
-            reminder: reminder
+          name: name,
+          date: date,
+          user_id: user_id,
+          points: points,
+          priority: priority,
+          reminder: reminder,
         },
         { new: false }
       );
