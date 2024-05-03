@@ -39,5 +39,6 @@ testem.log
 
 # System files
 .DS_Store
+openai.js
 Thumbs.db
 *.json
