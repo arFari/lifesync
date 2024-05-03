@@ -61,7 +61,7 @@ module.exports = {
     try {
       const {id, score} = req.body;
 
-      const user = await User.findOne({ _id: userId });
+      const user = await User.findOne({ _id: id });
       let scoreUser = user.score+Number(score);
       console.log(scoreUser)
 
@@ -81,6 +81,33 @@ module.exports = {
     } catch (error) {
       if (error instanceof mongoose.Error.ValidationError) {
 				res.status(400).json({ error: 'Invalid user data' });
+			} else {
+				res.status(500).json({ error: error });
+      }
+    }
+  },
+
+  updateCategories: async function (req, res) {
+    try {
+      const {id, categories} = req.body;
+
+      var cats = categories.split(",");
+
+      const user = await User.updateOne(
+        { _id: id },
+        { 
+            $push: { categories: cats }
+        }
+      );
+
+      if (user['modifiedCount'] == 0) {
+        return res.status(404).json({ status: 'ID not found' });
+      }
+
+      res.json({ status: 'Update successful' });
+    } catch (error) {
+      if (error instanceof mongoose.Error.ValidationError) {
+				res.status(400).json({ error: error });
 			} else {
 				res.status(500).json({ error: error });
       }

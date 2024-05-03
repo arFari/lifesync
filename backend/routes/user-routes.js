@@ -11,4 +11,6 @@ router.get("/", userCont.getUser);
 
 router.put("/add-score", userCont.addScore);
 
+router.put("/update", userCont.updateCategories);
+
 module.exports = router;

@@ -5,10 +5,6 @@ module.exports = {
   newItem: async function (req, res) {
     try {
       const {name, date, user_id, priority, reminder, points} = req.body;
-      
-      var a = categories;
-      a = a.replace(/'/g, '"');
-      a = JSON.parse(a);
 
       let schItem = new Item({
         name: name,
