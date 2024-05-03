@@ -14,7 +14,8 @@ const userSchema = mongoose.Schema({
 	},
     score: {
 		type: Number
-	}
+	},
+    
 });
 
 module.exports = mongoose.model("User", userSchema);
