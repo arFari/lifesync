@@ -15,6 +15,7 @@ const server = require("http").Server(app);
 app.use(express.static(path.join(__dirname, "./dist/webhack")));
 app.use('/assets', express.static(path.join(__dirname, './src/assets')));
 
+
 server.listen(PORT_NUMBER, () => {
     console.log(`Listening on port ${PORT_NUMBER}`);
 });
