@@ -18,7 +18,7 @@ export class ScheduleConfirmationComponent {
     categories: '',
     duration: 0
   };
-
+  currentUserId = "";
   constructor(private dbService: DatabaseService, private router: Router) {}
 
   item: any;
@@ -63,6 +63,7 @@ export class ScheduleConfirmationComponent {
   ];
 
   async ngOnInit() {
+    this.checkSessionStorage();
     await this.getPreference();
     console.log(this.user);
     let tempTime = this.user.time_spent;
@@ -113,7 +114,7 @@ export class ScheduleConfirmationComponent {
           points: this.generateRandomPoints(), // Set default points
           reminder: true,
           name: entry.category,
-          user_id: '66354042e45dbbb4e19f0bab'
+          user_id: this.currentUserId
         };
         items.push(item);
         if (additionalCounter == 7) {
@@ -140,11 +141,20 @@ export class ScheduleConfirmationComponent {
 
     return itemDay === day && itemHour === hour;
   }
-
+  checkSessionStorage() {
+    const userToken = sessionStorage.getItem('authToken');
+    if (userToken) {
+      this.currentUserId = userToken;
+      console.log('Token found in sessionStorage:', userToken);
+    } else {
+      console.log('No token found in sessionStorage.');
+      this.router.navigate(['/login']);
+    }
+  }
   async getPreference() {
     try {
       const user = await this.dbService
-        .getUser('66354042e45dbbb4e19f0bab')
+        .getUser(this.currentUserId)
         .toPromise();
       this.user = user;
     } catch (error) {
