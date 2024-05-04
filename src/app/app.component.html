@@ -1,6 +1,6 @@
 <header>
-  <nav class="navbar navbar-expand-lg navbar-light" style = "background-color:#83bc44;">
-    <a class="navbar-brand ms-5" href="#"><img src="assets/icon/logo-white.png" style="height: 40px;"></a>
+  <nav class="navbar navbar-expand-lg navbar-light" style = "background-color:#83bc44;" *ngIf="showNavBar">
+    <a class="navbar-brand ms-5" href="#">LifeSync</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -14,10 +14,10 @@
               </li>
           
               <li class="nav-item my-2">
-                  <a class="nav-link" href="#friendsOffcanvas" data-bs-toggle="offcanvas" role="button" aria-controls="friendsOffcanvas">
-                      <img src="assets/icon/friends.svg" alt="Friends" style="height: 32px; width: auto;">
-                  </a>
-              </li>
+                <a class="nav-link" href="#friendsOffcanvas" data-bs-toggle="offcanvas" role="button" aria-controls="friendsOffcanvas">
+                    <img src="assets/icon/friends.svg" alt="Friends" style="height: 32px; width: auto;">
+                </a>
+            </li>
 
               <li class="nav-item dropdown my-2">
                   <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -75,6 +75,5 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1/dist/js/bootstrap.bundle.min.js"></script>
   
   <div id="container">
-    <router-outlet>
-    </router-outlet>
+    <router-outlet (activate)="toggleNavBar($event)"></router-outlet>
   </div>
