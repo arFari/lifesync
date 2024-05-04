@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { response } from 'express';
 import { DatabaseService } from '../service/database.service';
 
 @Component({
@@ -32,16 +33,33 @@ export class CreateTimeComponent {
   goToQuestions(): void {
     if (this.selectedCategories.size > 0) {
       this.currentState = 'questioning';
+  
+      // Initialize timeSpent for each category if not already initialized
       this.selectedCategories.forEach(category => {
-        if (!this.timeSpent[category]) { // Initialize only if not already initialized
-          this.timeSpent[category] = { hours: 0};
+        if (!this.timeSpent[category]) {
+          this.timeSpent[category] = { hours: 0 };
         }
-        this.databaseService.updateCategories(this.selectedCategories) //
       });
+  
+      // Update categories in the database
+      console.log(this.selectedCategories)
+      const categoryArray = Array.from(this.selectedCategories);
+      this.databaseService.updateCategories(categoryArray).subscribe(
+        (response: any) => {
+          // Log successful updates here
+          console.log("Updated categories:", this.selectedCategories);
+          console.log("Response from server:", response);
+        },
+        (error: any) => {
+          // Handle errors, if any
+          console.error("Error updating categories:", error);
+        }
+      );
     } else {
       alert("Please select at least one category before proceeding.");
     }
   }
+  
 
   setHours(category: string, hours: number): void {
     if (this.timeSpent[category]) {
