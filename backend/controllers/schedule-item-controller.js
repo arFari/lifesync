@@ -95,8 +95,8 @@ module.exports = {
         { new: false }
       );
 
-      if (schItem['modifiedCount'] == 0) {
-        return res.status(404).json({ status: 'ID not found' });
+      if (schItem['modifiedCount'] == 0){
+        return res.status(404).json({ status: 'nothing changed' });
       }
 
       res.json({ status: 'Update successful' });
@@ -104,7 +104,7 @@ module.exports = {
       if (error instanceof mongoose.Error.ValidationError) {
 				res.status(400).json({ error: 'Invalid item data' });
 			} else {
-				res.status(500).json({ error: 'Failed to edit item' });
+				res.status(500).json({ error: error});
       }
     }
   }

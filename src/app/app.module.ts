@@ -6,12 +6,14 @@ import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CreateTimeComponent } from './create-time/create-time.component';
 import { CommonModule } from '@angular/common';
+import { CollectiblesComponent } from './collectibles/collectibles.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     CreateTimeComponent,
+    CollectiblesComponent,
   ],
   imports: [
     BrowserModule,

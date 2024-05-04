@@ -1,0 +1,14 @@
+.rounded-circle {
+    border: 2px solid white; /* Adds a white border */
+    box-shadow: 0 0 5px #000; /* Optional: Adds a shadow for depth */
+}
+.dropdown-toggle::after {
+display: none
+}
+#notificationDropdown + .dropdown-menu {
+    right: 50%;            /* Positions the right edge of the dropdown to the center of the bell icon */
+    transform: translateX(50%); /* Shifts the dropdown back to the left to truly center it */
+}
+.offcanvas-backdrop{
+  display: none;
+}
