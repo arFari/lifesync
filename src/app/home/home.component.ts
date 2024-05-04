@@ -24,23 +24,15 @@ export class HomeComponent {
     score: 100,
   };
   days: string[] = [
+    'Sunday',
     'Monday',
     'Tuesday',
     'Wednesday',
     'Thursday',
     'Friday',
     'Saturday',
-    'Sunday',
   ];
   hours: string[] = [
-    '00:00',
-    '01:00',
-    '02:00',
-    '03:00',
-    '04:00',
-    '05:00',
-    '06:00',
-    '07:00',
     '08:00',
     '09:00',
     '10:00',
@@ -56,7 +48,6 @@ export class HomeComponent {
     '20:00',
     '21:00',
     '22:00',
-    '23:00',
   ];
 
   async ngOnInit() {
@@ -77,18 +68,30 @@ export class HomeComponent {
 
   generateItemsFromTimeSpent(timeSpent: { category: string; hours: number }[]) {
     const items: any[] = [];
-
+    let additionalCounter = 0;
+    let additionalHours = 0;
+    let i = 0;
     // Convert time_spent array to IItem array
     timeSpent.forEach((entry) => {
       console.log(entry);
-      let counter = entry.hours;
-      for (let i = 0; i < counter; i++) {
+
+      let counter = entry.hours + i;
+      for (i; i < counter; i++) {
         if (i == 7) {
           counter = counter - 7;
           i = 0;
         }
+        // Set the day of the week to Monday (0 represents Sunday, 1 represents Monday, ..., 6 represents Saturday)
+
         let tomorrow = new Date();
+        tomorrow.setDate(
+          tomorrow.getDate() + ((1 + 7 - tomorrow.getDay()) % 7) - 1
+        ); // Move to next Monday
+
         tomorrow.setDate(tomorrow.getDate() + i);
+        tomorrow.setHours(8, 0, 0, 0);
+        tomorrow.setHours(tomorrow.getHours() + additionalHours);
+
         const item: any = {
           category: entry.category,
           priority: this.randomPriority(), // Set default priority
@@ -98,7 +101,13 @@ export class HomeComponent {
           reminder: true, // Set default reminder
         };
         items.push(item);
+        if (additionalCounter == 6) {
+          additionalHours += 1;
+          additionalCounter = 0;
+        }
+        additionalCounter += 1;
       }
+      i = +additionalCounter;
     });
 
     return items;
