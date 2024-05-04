@@ -1,3 +1,6 @@
+body{
+  background: transparent;
+}
 .no-padding {
     padding: 0 !important; /* Important to override Bootstrap's default padding */
   }
