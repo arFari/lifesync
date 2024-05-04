@@ -12,6 +12,7 @@ import { CollectiblesComponent } from './collectibles/collectibles.component';
 
 const routes: Routes = [
   { path: "CreateTime", component: CreateTimeComponent, title: "Create Timetable" },
+  { path: "collectibles", component: CollectiblesComponent, title: "Create Timetable" },
   { path: "test", component: HomeComponent, title: "Time" },
   { path: '', redirectTo: '/test', pathMatch: 'full' },
 ];
@@ -25,7 +26,7 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     FormsModule,
-    RouterModule.forRoot(routes, { useHash: true }), 
+    RouterModule.forRoot(routes, { useHash: false }), 
     HttpClientModule,
     CommonModule,
   ],
