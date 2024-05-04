@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Direct Message</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            height: 100%;
+        }
+        .friend-list {
+            background-color: #f0f0f0;
+            padding: 20px;
+            overflow-y: auto; /* Make friend list scrollable */
+            /* height: calc(100% - 70px); */
+        }
+        .friend {
+            cursor: pointer;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .friend:last-child {
+            border-bottom: none;
+        }
+        .friend.selected {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .message-container {
+            position: relative;
+            padding: 20px;
+            overflow-y: auto;
+            height: calc(100% - 70px); /* Adjusted height to accommodate the input and button */
+        }
+        .message {
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            padding: 10px 20px;
+            margin-bottom: 10px;
+        }
+        .sender {
+            color: #007bff;
+            font-weight: bold;
+        }
+        .timestamp {
+            color: #888;
+            font-size: 12px;
+        }
+        .message-body {
+            margin-top: 5px;
+        }
+        .form-container {
+            position: fixed;
+            bottom: 0px;
+            right: 0px;
+            left: 250px; 
+            background-color: #f0f0f0;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        input[type="text"], textarea {
+            flex: 1;
+            padding: 10px;
+            margin-right: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="friend-list" id="friendList">
+            <div class="friend">Friend 1</div>
+            <div class="friend">Friend 2</div>
+            <div class="friend">Friend 3</div>
+            <!-- Add more friends here -->
+            <!-- Adding more friends for demonstration -->
+            <div class="friend">Friend 4</div>
+            <div class="friend">Friend 5</div>
+            <div class="friend">Friend 6</div>
+            <div class="friend">Friend 7</div>
+            <div class="friend">Friend 8</div>
+            <div class="friend">Friend 9</div>
+            <div class="friend">Friend 10</div>
+            <div class="friend">Friend 11</div>
+            <div class="friend">Friend 12</div>
+            <div class="friend">Friend 13</div>
+            <div class="friend">Friend 14</div>
+            <div class="friend">Friend 15</div>
+            <div class="friend">Friend 16</div>
+            <div class="friend">Friend 17</div>
+            <div class="friend">Friend 18</div>
+            <div class="friend">Friend 19</div>
+            <div class="friend">Friend 20</div>
+            <div class="friend">Friend 21</div>
+            <div class="friend">Friend 22</div>
+            <div class="friend">Friend 23</div>
+            <div class="friend">Friend 24</div>
+            <div class="friend">Friend 25</div>
+        </div>
+        <div>
+            <div class="message-container" id="messageContainer">
+                <!-- Private messages will be displayed here -->
+            </div>
+        </div>
+    </div>
+    <div class="form-container">
+        <input type="text" id="messageText" placeholder="Type your message here">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        var friendList = document.getElementById('friendList');
+        var messageContainer = document.getElementById('messageContainer');
+        var selectedFriendName = '';
+
+        // Add click event listener to each friend
+        friendList.addEventListener('click', function(event) {
+            var selectedFriend = event.target;
+            // Check if the clicked element is a friend
+            if (selectedFriend.classList.contains('friend')) {
+                // Remove the 'selected' class from all friends
+                var friends = friendList.getElementsByClassName('friend');
+                for (var i = 0; i < friends.length; i++) {
+                    friends[i].classList.remove('selected');
+                }
+                // Add the 'selected' class to the clicked friend
+                selectedFriend.classList.add('selected');
+
+                selectedFriendName = selectedFriend.textContent;
+
+                // Clear previous messages
+                messageContainer.innerHTML = '';
+
+                if (selectedFriendName !== '') {
+                    // Simulate loading messages for the selected friend
+                    // Replace this with actual message loading logic
+                    var messages = [];
+                    if (selectedFriendName === 'Friend 1') {
+                        messages = [
+                            { sender: 'Friend 1', timestamp: new Date(), text: 'Hello! How are you?' },
+                            { sender: 'You', timestamp: new Date(), text: 'Hi! I am good, thank you.' },
+                            { sender: 'Friend 1', timestamp: new Date(), text: 'That\'s great to hear!' }
+                        ];
+                    } else if (selectedFriendName === 'Friend 2') {
+                        messages = [
+                            { sender: 'Friend 2', timestamp: new Date(), text: 'Hey! What\'s up?' },
+                            { sender: 'You', timestamp: new Date(), text: 'Not much, just chilling.' },
+                            { sender: 'Friend 2', timestamp: new Date(), text: 'Cool!' }
+                        ];
+                    } else if (selectedFriendName === 'Friend 3') {
+                        messages = [
+                            { sender: 'Friend 3', timestamp: new Date(), text: 'Hello there!' },
+                            { sender: 'You', timestamp: new Date(), text: 'Hi! How are you?' },
+                            { sender: 'Friend 3', timestamp: new Date(), text: 'I\'m good, thank you!' }
+                        ];
+                    }
+
+                    // Display messages in the message container
+                    messages.forEach(function(message) {
+                        displayMessage(message.sender, message.timestamp, message.text);
+                    });
+                }
+            }
+        });
+
+        // Function to display a message in the message container
+        function displayMessage(sender, timestamp, text) {
+            var messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+            var senderSpan = document.createElement('span');
+            senderSpan.classList.add('sender');
+            senderSpan.textContent = sender;
+            var timestampSpan = document.createElement('span');
+            timestampSpan.classList.add('timestamp');
+            timestampSpan.textContent = timestamp.toLocaleString();
+            var messageBodyDiv = document.createElement('div');
+            messageBodyDiv.classList.add('message-body');
+            messageBodyDiv.textContent = text;
+            messageDiv.appendChild(senderSpan);
+            messageDiv.appendChild(timestampSpan);
+            messageDiv.appendChild(messageBodyDiv);
+            messageContainer.appendChild(messageDiv);
+            // Scroll to the bottom of the message container after adding a new message
+            messageContainer.scrollTop = messageContainer.scrollHeight;
+        }
+
+        // Function to send a message
+        function sendMessage() {
+            var messageInput = document.getElementById('messageText');
+            var messageText = messageInput.value.trim();
+            if (messageText === '') {
+                alert('Please enter a message.');
+                return;
+            }
+            var timestamp = new Date();
+            displayMessage('You', timestamp, messageText);
+            messageInput.value = '';
+        }
+
+        // Send message when Enter key is pressed
+        document.getElementById("messageText").addEventListener("keyup", function(event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>
