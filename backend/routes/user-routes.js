@@ -13,4 +13,6 @@ router.put("/add-score", userCont.addScore);
 
 router.put("/update", userCont.updateCategories);
 
+router.put("/update-time", userCont.updateTimeSpent);
+
 module.exports = router;
