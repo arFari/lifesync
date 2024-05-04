@@ -1,34 +1,46 @@
-<div class="album py-5">
-    <div class="container">
-        <h3 class="my-2">Create Timetable</h3>
-        <div class="row row-cols-1 row-cols-sm-2 g-3">
-            <div class="col">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <form id="timetableForm">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Category Name</label>
-                                <input type="text" name="name" class="form-control" id="name"
-                                    placeholder="Enter Category Name" required>
-                                <div class="invalid-feedback">
-                                    Please provide a category name.
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="description" class="form-label">Description</label>
-                                <textarea name="description" class="form-control" id="description" rows="4"
-                                    placeholder="Enter Description"></textarea>
-                            </div>
-
-
-                            <div class="text-center">
-                                <button class="btn btn-primary" type="submit">Submit</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+<div class="container mt-3">
+  <div *ngIf="currentState === 'selecting'">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">From these productivity categories, which one seems important to you?</h5>
+        <br>
+        <div class="row">
+          <!-- Grid of Buttons with Icons -->
+          <div class="col-6 mb-2" *ngFor="let category of categories">
+            <button type="button" class="btn w-100 d-flex flex-column align-items-center"
+              [ngClass]="{'btn-outline-primary': !selectedCategories.has(category.key), 'btn-primary': selectedCategories.has(category.key)}"
+              (click)="toggleSelection(category.key)">
+              <img [src]="category.icon" alt="{{category.name}}" class="img-fluid" style="max-height: 50px;">
+              <span>{{category.name}}</span>
+            </button>
+          </div>
         </div>
+        <button type="button" class="btn btn-primary w-100 mt-3" (click)="goToQuestions()">Next</button>
+      </div>
     </div>
-</div>
+  </div>
+  
+  
+  <div class="container mt-3" *ngIf="currentState === 'questioning'">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Let's Adjust Your Weekly Routines</h5>
+        <p class="card-text">Drag the slider to adjust the number of hours per week you want to dedicate to each activity</p>
+        
+      <!-- Dynamic Sliders for Each Category -->
+      <div *ngFor="let category of categories">
+        <div *ngIf="selectedCategories.has(category.key)">
+          <label for="slider-{{category.key}}" class="form-label"><b>{{category.name}}</b></label>
+          <input type="range" class="form-range" id="slider-{{category.key}}" min="0" max="10"
+                 [(ngModel)]="timeSpent[category.key].hours" (ngModelChange)="setHours(category.key, $event)">
+          <div class="text-center">{{timeSpent[category.key].hours || 0}} hour(s) per week</div>
+        </div>
+      </div>
+        
+  
+        <button type="button" class="btn btn-primary mt-3" (click)="completeQuestions()">Generate</button>
+      </div>
+    </div>
+  </div>
+  
+  
