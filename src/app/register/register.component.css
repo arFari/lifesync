@@ -32,7 +32,7 @@ body {
   }
   
   .btn-primary {
-    background-color: #0056b3; /* Brighter blue */
+    background-color: goldenrod; /* Brighter blue */
     border: none; /* Remove default border */
     border-radius: 4px; /* Rounded button edges */
     padding: 10px 0; /* Top and bottom padding */
@@ -42,10 +42,11 @@ body {
   .btn-primary.btn-block {
     display: block;
     width: 100%; /* Ensures the button stretches to full width */
+    background-color: goldenrod;
   }
   
   .btn-primary:hover {
-    background-color: #004094; /* Slightly darker blue on hover */
+    background-color: darkgoldenrod; /* Slightly darker blue on hover */
   }
   
   a {
