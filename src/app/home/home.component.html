@@ -32,7 +32,7 @@
                           <div class="col no-padding" >{{ hour }}</div>
                           <div class="col no-padding" *ngFor="let day of days; let j = index">
                             <div class="hour">
-                              <div *ngIf="j === currentDayIndex && i === currentTimeIndex" class="current-time">-></div>
+                              <div *ngIf="j === currentDayIndex && i === currentTimeIndex" class="current-time">-></div >
                               <div *ngFor="let item of items">
                                 <div *ngIf="isItemInTimeSlot(item, day, hour)">
                                   {{ item.category }} 
