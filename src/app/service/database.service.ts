@@ -43,6 +43,9 @@ export class DatabaseService {
   getUser(userId: string): Observable<any> {
     return this.http.get<any>(`api/user?id=${userId}`);
   }
+  getUserById(userId: string): Observable<any> {
+    return this.http.get<any>(`/api/schedule-item/id/${userId}`);
+  }
   login(username: string, password: string): Observable<any> {
     return this.http.post<any>('api/user/login', {username, password}, httpOptions);
   }

@@ -15,7 +15,7 @@ export class HomeComponent {
   timeSpent: any = { category: '', hours: 0 };
   currentDayIndex: number = 0;
   currentTimeIndex: number = 0;
-
+  currentUserId: string = '';
   user: any = {
     _id: 'sample_id',
     username: 'sample_username',
@@ -53,14 +53,26 @@ export class HomeComponent {
   ];
 
   async ngOnInit() {
+    this.checkSessionStorage();
     this.getItems();
 
     this.currentDayIndex = new Date().getDay(); // 0 for Sunday, 1 for Monday, etc.
     this.currentTimeIndex = new Date().getHours(); // 0 to 23 for hours
   }
-
+  checkSessionStorage() {
+    const userToken = sessionStorage.getItem('authToken');
+    if (userToken) {
+      this.currentUserId = userToken;
+      console.log('Token found in sessionStorage:', userToken);
+    } else {
+      console.log('No token found in sessionStorage.');
+      this.router.navigate(['/login']);
+    }
+  }
+  
   getItems() {
-    this.dbService.getItems().subscribe((item: any) => {
+    console.log(this.currentUserId)
+    this.dbService.getUserById(this.currentUserId).subscribe((item: any) => {
       console.log(item);
       this.items = item;
     });
@@ -82,7 +94,7 @@ export class HomeComponent {
   async getPreference() {
     try {
       const user = await this.dbService
-        .getUser('66354042e45dbbb4e19f0bab')
+        .getUser(this.currentUserId)
         .toPromise();
       this.user = user;
     } catch (error) {
