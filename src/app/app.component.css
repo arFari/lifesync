@@ -63,3 +63,12 @@ display: none
 .btn-close:hover {
   color: #ffd700; /* Gold color on hover for the close button */
 }
+
+#container {
+    width: 100vw;
+    height: 100vh;
+    background-image: url("/assets/game/background.png");
+    background-repeat: repeat;
+    background-size: cover;
+}
+

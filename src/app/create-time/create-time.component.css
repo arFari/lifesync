@@ -18,7 +18,7 @@ body {
   
   /* Card styling */
   .card {
-    background-color: #ffffff; /* White background for the card */
+    background-color: #b86434; /* White background for the card */
     border-radius: 8px; /* Rounded corners */
     box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow */
     padding: 20px; /* Padding inside the card */
@@ -28,7 +28,7 @@ body {
   /* Titles and text */
   .card-title {
     font-size: 24px; /* Larger font size for titles */
-    color: #0056b3; /* Blue that is often seen in professional themes */
+    color: #ffffff; /* Blue that is often seen in professional themes */
     margin-bottom: 10px; /* Space below the title */
   }
   
@@ -44,7 +44,7 @@ body {
     -webkit-appearance: none; /* Removes default webkit styles */
     appearance: none;
     height: 2px; /* Thin and subtle track */
-    background: #0056b3; /* Slider track color to match the theme */
+    background: goldenrod; /* Slider track color to match the theme */
   }
   
   .form-range::-webkit-slider-thumb {
@@ -52,7 +52,7 @@ body {
     appearance: none;
     width: 20px; /* Larger touch area */
     height: 20px; /* Circular thumb */
-    background: #007bff; /* Bootstrap primary color for consistency */
+    background: goldenrod; /* Bootstrap primary color for consistency */
     border-radius: 50%; /* Round shape */
     cursor: pointer;
   }
@@ -60,24 +60,39 @@ body {
   .form-range::-moz-range-thumb {
     width: 20px;
     height: 20px;
-    background: #007bff;
+    background: goldenrod;
     border-radius: 50%;
     cursor: pointer;
   }
   
   /* Button Styling */
   .btn-primary {
-    background-color: #007bff; /* Bootstrap primary blue */
-    border-color: #007bff; /* Same as background */
+    background-color:goldenrod; /* Bootstrap primary blue */
+    border-color: #000000; /* Same as background */
     color: white; /* White text */
     padding: 10px 20px; /* Larger padding for better touch */
     font-size: 16px; /* Larger font size */
     border-radius: 5px; /* Rounded corners */
     transition: background-color 0.3s, border-color 0.3s; /* Smooth transition on hover */
   }
+
+  .btn-outline-primary {
+    background-color:#ffffff; /* Bootstrap primary blue */
+    border-color: goldenrod; /* Same as background */
+    color: #000000; /* White text */
+    padding: 10px 20px; /* Larger padding for better touch */
+    font-size: 16px; /* Larger font size */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s, border-color 0.3s; /* Smooth transition on hover */
+  }
+
+  .btn-outline-primary:hover {
+    border-color: rgb(203, 154, 29);
+    background-color:goldenrod;
+  }
   
   .btn-primary:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-    border-color: #004085; /* Even darker border on hover */
+    background-color: rgb(203, 154, 29); /* Darker blue on hover */
+    border-color: #000000; /* Even darker border on hover */
   }
   
