@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { response } from 'express';
 import { DatabaseService } from '../service/database.service';
 
 @Component({
@@ -9,7 +8,6 @@ import { DatabaseService } from '../service/database.service';
   styleUrls: ['./create-time.component.css']
 })
 export class CreateTimeComponent {
-  constructor(private databaseService: DatabaseService, private router: Router) { }
   selectedCategories = new Set<string>();
   currentState = 'selecting';
   timeSpent: { [category: string]: { hours: number} } = {};
@@ -21,37 +19,38 @@ export class CreateTimeComponent {
     { key: 'socialising', name: 'Socialising', icon: 'assets/icon/social.svg' },
     { key: 'working', name: 'Working', icon: 'assets/icon/work.svg' }
   ];
+  fixedUserId = '66354042e45dbbb4e19f0bab'; // Removed 'string' type declaration as it is redundant
 
-  toggleSelection(category: string): void {
-    if (this.selectedCategories.has(category)) {
-      this.selectedCategories.delete(category);
+  constructor(private databaseService: DatabaseService, private router: Router) {}
+
+  toggleSelection(categoryKey: string): void {
+    if (this.selectedCategories.has(categoryKey)) {
+      this.selectedCategories.delete(categoryKey);
     } else {
-      this.selectedCategories.add(category);
+      this.selectedCategories.add(categoryKey);
     }
   }
 
   goToQuestions(): void {
     if (this.selectedCategories.size > 0) {
-      this.currentState = 'questioning';
+      console.log("Selected categories:", Array.from(this.selectedCategories));
+      const categoryArray = Array.from(this.selectedCategories).join(',');
   
-      // Initialize timeSpent for each category if not already initialized
-      this.selectedCategories.forEach(category => {
-        if (!this.timeSpent[category]) {
-          this.timeSpent[category] = { hours: 0 };
+      // Ensure every selected category has an initialized 'timeSpent' entry
+      this.selectedCategories.forEach(categoryKey => {
+        if (!this.timeSpent[categoryKey]) {
+          this.timeSpent[categoryKey] = { hours: 0 };
         }
       });
   
       // Update categories in the database
-      console.log(this.selectedCategories)
-      const categoryArray = Array.from(this.selectedCategories);
-      this.databaseService.updateCategories(categoryArray).subscribe(
-        (response: any) => {
-          // Log successful updates here
-          console.log("Updated categories:", this.selectedCategories);
+      this.databaseService.updateCategories(this.fixedUserId, categoryArray).subscribe(
+        response => {
+          console.log("Updated categories:", categoryArray);
           console.log("Response from server:", response);
+          this.currentState = 'questioning'; // Change state only after successful update
         },
-        (error: any) => {
-          // Handle errors, if any
+        error => {
           console.error("Error updating categories:", error);
         }
       );
@@ -60,15 +59,39 @@ export class CreateTimeComponent {
     }
   }
   
+  
+  
 
-  setHours(category: string, hours: number): void {
-    if (this.timeSpent[category]) {
-      this.timeSpent[category].hours = hours;
+  setHours(categoryKey: string, hours: number): void {
+    if (this.timeSpent[categoryKey]) {
+      this.timeSpent[categoryKey].hours = hours;
+    } else {
+      console.error("Attempted to set hours for a category not initialized or selected.");
     }
   }
 
   completeQuestions(): void {
-    this.currentState = 'completed'; // Move to the next part of your application logic
-    console.log('Submission Data:', this.timeSpent);
+    this.currentState = 'completed'; // Update the component state
+  
+    // Prepare the timeSpent data for submission
+    const timeSpentData = Array.from(this.selectedCategories).map(categoryKey => ({
+      category: categoryKey,
+      hours: this.timeSpent[categoryKey]?.hours || 0  // Safeguard with '|| 0' to handle undefined
+    }));
+  
+    console.log('Submission Data:', timeSpentData);
+  
+    // Send the data to the server
+    this.databaseService.updateTimeSpent(this.fixedUserId, timeSpentData).subscribe(
+      response => {
+        console.log("Time spent updated successfully.", response);
+        // Optionally handle navigation or additional logic here after successful update
+      },
+      error => {
+        console.error("Failed to update time spent.", error);
+        // Handle errors, potentially notifying the user
+      }
+    );
   }
+  
 }

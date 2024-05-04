@@ -112,5 +112,22 @@ module.exports = {
 				res.status(500).json({ error: error });
       }
     }
+  },
+
+  updateTimeSpent: async function (req, res) {
+    try {
+      const { id, time_spent } = req.body;
+      if (!Array.isArray(time_spent) || !time_spent.every(item => typeof item.category === 'string' && typeof item.hours === 'number')) {
+        return res.status(400).json({ error: 'Invalid time_spent format' });
+      }
+      const user = await User.updateOne({ _id: id }, { $set: { time_spent: time_spent } });
+      if (user.modifiedCount === 0) {
+        return res.status(404).json({ status: 'User ID not found' });
+      }
+      res.json({ status: 'Update successful' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Failed to update time spent' });
+    }
   }
 };

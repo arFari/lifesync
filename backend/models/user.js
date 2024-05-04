@@ -18,9 +18,10 @@ const userSchema = mongoose.Schema({
     categories: {
         type:[String]
     },
-    time_spent: {
-        type: Number
-    },
+    time_spent: [{
+        category: String,
+        hours: Number
+    }],
     score: {
 		type: Number,
         default: 0
