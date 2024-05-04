@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Direct Message</title>
+    <style>
+        /* Styles for the popup */
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #36393f;
+            border: 1px solid #72767d;
+            border-radius: 8px;
+            padding: 20px;
+            z-index: 1000;
+            display: none;
+            width: 500px;
+            height: 500px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Styles for the overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        /* Style for close button */
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            color: #72767d;
+        }
+
+        /* Style for friend profile */
+        .friend-profile {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        /* Style for friend avatar */
+        .friend-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+
+        /* Style for friend details */
+        .friend-details {
+            flex-grow: 1;
+        }
+
+        /* Style for friend name */
+        .friend-name {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        /* Style for friend status */
+        .friend-status {
+            font-size: 14px;
+            color: #72767d;
+        }
+
+        /* Style for direct message box */
+        .message-box {
+            max-height: 500px;
+            overflow-y: auto;
+            width: 100%;
+            height: 340px;
+            border: 1px solid #72767d;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            resize: none;
+            background-color: #2f3136;
+            color: #ffffff;
+            scrollbar-width: thin;
+        }
+
+        /* Style for message input */
+        .message-input {
+            width: calc(100% - 20px); /* Adjust for padding */
+            padding: 5px;
+            border: 1px solid #72767d;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            background-color: #2f3136;
+            color: #ffffff;
+        }
+
+        /* Style for send button */
+        .send-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #7289da;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        /* Style for received message */
+        .received-message {
+            background-color: #4f545c;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        /* Style for sent message */
+        .sent-message {
+            background-color: #7289da;
+            color: #ffffff;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            text-align: right;
+        }
+
+        /* Style for view full message button */
+        .view-full-message-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #36393f;
+            color: #ffffff;
+            cursor: pointer;
+            float: right;
+        }
+
+        .full {
+            margin-bottom: 1px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="friend-list" id="friendList">
+        <!-- Sample friends -->
+        <div class="friend" data-id="1">Friend 1</div>
+        <div class="friend" data-id="2">Friend 2</div>
+        <div class="friend" data-id="3">Friend 3</div>
+    </div>
+</div>
+
+<!-- Popup -->
+<div class="overlay" id="overlay"></div>
+<div class="popup" id="popup">
+    <div class="close" onclick="closePopup()">✖</div>
+    <div class="friend-profile">
+        <img src="avatar.png" alt="Avatar" class="friend-avatar">
+        <div class="friend-details">
+            <div class="friend-name" id="friendName">Friend Name</div>
+            <div class="friend-status" id="friendStatus">Online</div>
+        </div>
+    </div>
+    <div class="message-box" id="messageBox"></div>
+    <input type="text" class="message-input" id="messageInput" placeholder="Type your message here">
+    <button class="send-button" onclick="sendMessage()">Send</button>
+    <button class="view-full-message-button justify-content-end" onclick="viewFullMessage()">View Full Message</button>
+</div>
+
+<script>
+    // Open popup function
+    function openPopup(friendId) {
+        var friendName = document.querySelector('.friend[data-id="' + friendId + '"]').textContent;
+        document.getElementById('friendName').textContent = friendName;
+        document.getElementById('overlay').style.display = 'block';
+        document.getElementById('popup').style.display = 'block';
+    }
+
+    // Close popup function
+    function closePopup() {
+        document.getElementById('overlay').style.display = 'none';
+        document.getElementById('popup').style.display = 'none';
+    }
+
+    // Send message function
+    function sendMessage() {
+        var messageInput = document.getElementById('messageInput');
+        var message = messageInput.value.trim();
+        if (message === '') return;
+        messageInput.value = '';
+        displaySentMessage(message);
+        // Simulate receiving a response after 1 second
+        setTimeout(function() {
+            displayReceivedMessage("Response from friend");
+        }, 1000);
+    }
+
+    // Display received message
+    function displayReceivedMessage(message) {
+        var messageContainer = document.createElement('div');
+        messageContainer.classList.add('received-message');
+        messageContainer.textContent = message;
+        document.getElementById('messageBox').appendChild(messageContainer);
+        // Scroll to the bottom of the message box after adding a new message
+        messageContainer.scrollIntoView({ behavior: "smooth", block: "end" });
+    }
+
+    // Display sent message
+    function displaySentMessage(message) {
+        var messageContainer = document.createElement('div');
+        messageContainer.classList.add('sent-message');
+        messageContainer.textContent = message;
+        document.getElementById('messageBox').appendChild(messageContainer);
+        // Scroll to the bottom of the message box after adding a new message
+        messageContainer.scrollIntoView({ behavior: "smooth", block: "end" });
+    }
+
+    // View full message function
+    function viewFullMessage() {
+        // Get all messages
+        var messages = document.querySelectorAll('.sent-message, .received-message');
+        // Create a new page to display full message
+        var newWindow = window.open('', '_blank');
+        // Write full message to the new page
+        messages.forEach(function(message) {
+            newWindow.document.write(message.textContent + '<br>');
+        });
+    }
+
+    // Add event listeners to friends
+    var friends = document.querySelectorAll('.friend');
+    friends.forEach(function(friend) {
+        friend.addEventListener('click', function() {
+            var friendId = this.getAttribute('data-id');
+            openPopup(friendId);
+        });
+    });
+
+    // Add event listener to message input for Enter key press
+    document.getElementById('messageInput').addEventListener('keyup', function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault(); // Prevent default behavior of Enter key
+            sendMessage(); // Call sendMessage function when Enter key is pressed
+        }
+    });
+</script>
+
+</body>
+</html>
