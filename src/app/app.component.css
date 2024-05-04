@@ -9,6 +9,57 @@ display: none
     right: 50%;            /* Positions the right edge of the dropdown to the center of the bell icon */
     transform: translateX(50%); /* Shifts the dropdown back to the left to truly center it */
 }
-.offcanvas-backdrop{
-  display: none;
+/* Custom styles for the header */
+.navbar-brand {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffffff; /* White color for the brand */
+}
+
+.nav-link {
+  color: #ffffff; /* White color for the links */
+  font-weight: bold;
+  transition: color 0.3s ease; /* Smooth color transition on hover */
+}
+
+.nav-link:hover {
+  color: #ffd700; /* Gold color on hover */
+}
+
+.navbar-toggler-icon {
+  background-color: #ffd700; /* Gold color for the toggle button icon */
+}
+
+/* Styling for the dropdown menus */
+.dropdown-menu {
+  border: none;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+  background-color: #32cd32; /* Lime green color for dropdown background */
+}
+
+.dropdown-item {
+  color: #ffffff; /* White color for dropdown items */
+}
+
+.dropdown-item:hover {
+  background-color: #228b22; /* Darker green background on hover */
+}
+
+/* Styling for the offcanvas */
+.offcanvas-body {
+  padding: 20px;
+  background-color: #32cd32; /* Lime green color for offcanvas background */
+}
+
+.offcanvas-title {
+  font-size: 20px;
+  color: #ffffff; /* White color for the offcanvas title */
+}
+
+.btn-close {
+  color: #ffffff; /* White color for the close button */
+}
+
+.btn-close:hover {
+  color: #ffd700; /* Gold color on hover for the close button */
 }
