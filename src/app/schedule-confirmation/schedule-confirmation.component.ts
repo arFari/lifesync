@@ -1,12 +1,24 @@
 import { Component } from '@angular/core';
 import { DatabaseService } from '../service/database.service';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-schedule-confirmation',
   templateUrl: './schedule-confirmation.component.html',
   styleUrls: ['./schedule-confirmation.component.css'],
 })
 export class ScheduleConfirmationComponent {
+  EventData = {
+    name: "",
+    priority: 1, 
+    date: new Date(),
+    user_id: "66354042e45dbbb4e19f0bab", 
+    points: 10,
+    reminder: false,
+    categories: '',
+    duration: 0
+  };
+
   constructor(private dbService: DatabaseService, private router: Router) {}
 
   item: any;
@@ -21,7 +33,7 @@ export class ScheduleConfirmationComponent {
     name: 'Sample User',
     categories: [],
     time_spent: [],
-    score: 100,
+    score: this.generateRandomPoints(),
   };
   days: string[] = [
     'Sunday',
@@ -59,6 +71,10 @@ export class ScheduleConfirmationComponent {
     this.items = balancedSchedule;
   }
 
+  generateRandomPoints() {
+    return Math.floor(Math.random() * 91) + 10;
+  }
+
   getItems() {
     this.dbService.getItems().subscribe((item: any) => {
       this.items = item;
@@ -90,12 +106,14 @@ export class ScheduleConfirmationComponent {
         tomorrow.setHours(tomorrow.getHours() + additionalHours);
 
         const item: any = {
-          category: entry.category,
+          categories: entry.category,
           priority: this.randomPriority(), // Set default priority
           date: tomorrow,
-          hours: entry.hours,
-          points: 10, // Set default points
-          reminder: true, // Set default reminder
+          duration: entry.hours,
+          points: this.generateRandomPoints(), // Set default points
+          reminder: true,
+          name: entry.category,
+          user_id: '66354042e45dbbb4e19f0bab'
         };
         items.push(item);
         if (additionalCounter == 7) {
@@ -111,7 +129,7 @@ export class ScheduleConfirmationComponent {
   }
 
   randomPriority() {
-    let temparr = ['low', 'med', 'high'];
+    let temparr = [0,1,2];
     return temparr[Math.floor(Math.random() * 2)];
   }
 
@@ -136,8 +154,20 @@ export class ScheduleConfirmationComponent {
 
   async confirmSchedule() {
     try {
-      await this.dbService.addItems(this.items);
-      this.router.navigate(['']);
+      console.log(this.items);
+      this.items.forEach(item => {
+        this.dbService.addItems(item).subscribe((result: any) => {
+          // this.router.navigate(['']);
+          console.log(result)
+        },
+          (error: HttpErrorResponse) => {
+            if (error.status === 400) {
+              console.error("404", error);
+            } else {
+              console.error(error);
+            }
+          });
+      });
     } catch (error) {
       console.error('Error adding items: ', error);
     }

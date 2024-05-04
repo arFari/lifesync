@@ -38,7 +38,7 @@ export class DatabaseService {
     return this.http.get('/api/schedule-item/list');
   }
   addItems(data: any) {
-    return this.http.post<any>('/api/schedule-item/add', data);
+    return this.http.post<any>('/api/schedule-item/add', data, httpOptions);
   }
   getUser(userId: string): Observable<any> {
     return this.http.get<any>(`api/user?id=${userId}`);
