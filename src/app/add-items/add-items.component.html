@@ -1,6 +1,5 @@
-<body>
-  <div class="container">
-    <h2>Add New Event</h2>
+<div class="container">
+    <h3>Add New Event</h3>
     <form (ngSubmit)="submitForm()" #eventForm="ngForm">
       <div class="form-group">
         <label for="name">Name:</label>
@@ -40,4 +39,3 @@
       <button type="submit" class="btn btn-primary" [disabled]="!eventForm.valid">Add Event</button>
     </form>
   </div>
-  </body>
