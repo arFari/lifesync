@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 import { DatabaseService } from '../service/database.service';
 import { Router } from '@angular/router';
-
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
+  selector: 'app-schedule-confirmation',
+  templateUrl: './schedule-confirmation.component.html',
+  styleUrls: ['./schedule-confirmation.component.css'],
 })
-export class HomeComponent {
+export class ScheduleConfirmationComponent {
   constructor(private dbService: DatabaseService, private router: Router) {}
 
   item: any;
   items: any[] = [];
   timeSpent: any = { category: '', hours: 0 };
+  startTime: number = 8;
 
   user: any = {
     _id: 'sample_id',
@@ -52,16 +52,15 @@ export class HomeComponent {
 
   async ngOnInit() {
     await this.getPreference();
+    console.log(this.user);
     let tempTime = this.user.time_spent;
-    console.log(tempTime);
+    this.startTime = this.user.startTime;
     let balancedSchedule = this.generateItemsFromTimeSpent(tempTime);
-    console.log('schedule: ' + balancedSchedule);
     this.items = balancedSchedule;
   }
 
   getItems() {
     this.dbService.getItems().subscribe((item: any) => {
-      console.log('items: ' + item);
       this.items = item;
     });
   }
@@ -73,8 +72,6 @@ export class HomeComponent {
     let i = 1;
     // Convert time_spent array to IItem array
     timeSpent.forEach((entry) => {
-      console.log(entry);
-
       let counter = entry.hours + i;
       for (i; i <= counter; i++) {
         if (i == 7) {
@@ -89,7 +86,7 @@ export class HomeComponent {
         ); // Move to next Monday
 
         tomorrow.setDate(tomorrow.getDate() + i - 1);
-        tomorrow.setHours(10, 0, 0, 0);
+        tomorrow.setHours(this.startTime, 0, 0, 0);
         tomorrow.setHours(tomorrow.getHours() + additionalHours);
 
         const item: any = {
@@ -123,7 +120,6 @@ export class HomeComponent {
     const itemDay = this.days[itemDate.getDay()];
     const itemHour = itemDate.getHours().toString().padStart(2, '0') + ':00';
 
-    console.log(itemDate, itemDay, itemHour);
     return itemDay === day && itemHour === hour;
   }
 
@@ -136,5 +132,18 @@ export class HomeComponent {
     } catch (error) {
       console.error('Error fetching user:', error);
     }
+  }
+
+  async confirmSchedule() {
+    try {
+      await this.dbService.addItems(this.items);
+      this.router.navigate(['']);
+    } catch (error) {
+      console.error('Error adding items: ', error);
+    }
+  }
+
+  cancel() {
+    this.router.navigate(['/CreateTime']);
   }
 }

@@ -37,6 +37,11 @@
         </div>
       </div>
         
+      <!-- Start Time Slider -->
+        <label for="start-time-slider" class="form-label mt-3"><b>When do you want to start your day?</b></label>
+        <input type="range" class="form-range" id="start-time-slider" min="8" max="12"
+              [(ngModel)]="startTime" (ngModelChange)="setStartTime($event)">
+        <div class="text-center">{{startTime}}:00 AM</div>
   
         <button type="button" class="btn btn-primary mt-3" (click)="completeQuestions()">Generate</button>
       </div>

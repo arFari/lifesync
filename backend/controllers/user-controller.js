@@ -89,15 +89,17 @@ module.exports = {
 
   updateCategories: async function (req, res) {
     try {
-      const {id, categories} = req.body;
+      const {id, categories,startTime} = req.body;
 
       var cats = categories.split(",");
 
       const user = await User.updateOne(
         { _id: id },
         { 
-            $push: { categories: cats }
-        }
+            $push: { categories: cats },
+            
+        },
+        { new: false }
       );
 
       if (user['modifiedCount'] == 0) {
@@ -116,11 +118,11 @@ module.exports = {
 
   updateTimeSpent: async function (req, res) {
     try {
-      const { id, time_spent } = req.body;
+      const { id, time_spent,startTime } = req.body;
       if (!Array.isArray(time_spent) || !time_spent.every(item => typeof item.category === 'string' && typeof item.hours === 'number')) {
         return res.status(400).json({ error: 'Invalid time_spent format' });
       }
-      const user = await User.updateOne({ _id: id }, { $set: { time_spent: time_spent } });
+      const user = await User.updateOne({ _id: id }, { $set: { time_spent: time_spent, startTime:startTime} });
       if (user.modifiedCount === 0) {
         return res.status(404).json({ status: 'User ID not found' });
       }

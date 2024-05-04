@@ -11,13 +11,27 @@ import { DatabaseService } from './service/database.service';
 import { CollectiblesComponent } from './collectibles/collectibles.component';
 import { TestingComponent } from './testing/testing.component';
 import { AddItemsComponent } from './add-items/add-items.component';
+import { ScheduleConfirmationComponent } from './schedule-confirmation/schedule-confirmation.component';
 
 const routes: Routes = [
-  { path: "CreateTime", component: CreateTimeComponent, title: "Create Timetable" },
-  { path: "collectibles", component: CollectiblesComponent, title: "Collectibles" },
-  { path: "add", component: AddItemsComponent, title: "Add Event"},
-  { path: "test", component: HomeComponent, title: "Time" },
+  {
+    path: 'CreateTime',
+    component: CreateTimeComponent,
+    title: 'Create Timetable',
+  },
+  {
+    path: 'collectibles',
+    component: CollectiblesComponent,
+    title: 'Collectibles',
+  },
+  { path: 'add', component: AddItemsComponent, title: 'Add Event' },
+  { path: 'test', component: HomeComponent, title: 'Time' },
   { path: '', redirectTo: '/test', pathMatch: 'full' },
+  {
+    path: 'schedule-confirmation',
+    component: ScheduleConfirmationComponent,
+    title: 'Schedule Confrimation',
+  },
 ];
 
 @NgModule({
@@ -28,11 +42,12 @@ const routes: Routes = [
     TestingComponent,
     CollectiblesComponent,
     AddItemsComponent,
+    ScheduleConfirmationComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    RouterModule.forRoot(routes, { useHash: false }), 
+    RouterModule.forRoot(routes, { useHash: false }),
     HttpClientModule,
     CommonModule,
   ],

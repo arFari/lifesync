@@ -23,9 +23,10 @@ export class DatabaseService {
   // In DatabaseService
   updateTimeSpent(
     userId: string,
-    timeSpent: { category: string; hours: number }[]
+    timeSpent: { category: string; hours: number }[],
+    startTime: number
   ): Observable<any> {
-    const body = { time_spent: timeSpent };
+    const body = { time_spent: timeSpent, startTime: startTime };
     return this.http.put(
       `/api/user/update-time`,
       { id: userId, ...body },
