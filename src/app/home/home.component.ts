@@ -15,7 +15,7 @@ export class HomeComponent {
   timeSpent: any = { category: '', hours: 0 };
   currentDayIndex: number = 0;
   currentTimeIndex: number = 0;
-
+  currentUserId: string = '';
   user: any = {
     _id: 'sample_id',
     username: 'sample_username',
@@ -35,8 +35,7 @@ export class HomeComponent {
     'Saturday',
   ];
   hours: string[] = [
-    '01:00',
-    '02:00',
+    '05:00',
     '08:00',
     '09:00',
     '10:00',
@@ -55,69 +54,29 @@ export class HomeComponent {
   ];
 
   async ngOnInit() {
-    await this.getPreference();
-    let tempTime = this.user.time_spent;
-    console.log(tempTime);
-    let balancedSchedule = this.generateItemsFromTimeSpent(tempTime);
-    console.log('schedule: ' + balancedSchedule);
-    this.items = balancedSchedule;
+    this.checkSessionStorage();
+    this.getItems();
 
     this.currentDayIndex = new Date().getDay(); // 0 for Sunday, 1 for Monday, etc.
     this.currentTimeIndex = new Date().getHours(); // 0 to 23 for hours
   }
-
+  checkSessionStorage() {
+    const userToken = sessionStorage.getItem('authToken');
+    if (userToken) {
+      this.currentUserId = userToken;
+      console.log('Token found in sessionStorage:', userToken);
+    } else {
+      console.log('No token found in sessionStorage.');
+      this.router.navigate(['/login']);
+    }
+  }
+  
   getItems() {
-    this.dbService.getItems().subscribe((item: any) => {
-      console.log('items: ' + item);
+    console.log(this.currentUserId)
+    this.dbService.getUserById(this.currentUserId).subscribe((item: any) => {
+      console.log(item);
       this.items = item;
     });
-  }
-
-  generateItemsFromTimeSpent(timeSpent: { category: string; hours: number }[]) {
-    const items: any[] = [];
-    let additionalCounter = 1;
-    let additionalHours = 0;
-    let i = 1;
-    // Convert time_spent array to IItem array
-    timeSpent.forEach((entry) => {
-      console.log(entry);
-
-      let counter = entry.hours + i;
-      for (i; i <= counter; i++) {
-        if (i == 7) {
-          counter = counter - i;
-          i = 0;
-        }
-        // Set the day of the week to Monday (0 represents Sunday, 1 represents Monday, ..., 6 represents Saturday)
-
-        let tomorrow = new Date();
-        tomorrow.setDate(
-          tomorrow.getDate() + ((1 + 7 - tomorrow.getDay()) % 7) - 1
-        ); // Move to next Monday
-
-        tomorrow.setDate(tomorrow.getDate() + i - 1);
-        tomorrow.setHours(10, 0, 0, 0);
-        tomorrow.setHours(tomorrow.getHours() + additionalHours);
-
-        const item: any = {
-          category: entry.category,
-          priority: this.randomPriority(), // Set default priority
-          date: tomorrow,
-          hours: entry.hours,
-          points: 10, // Set default points
-          reminder: true, // Set default reminder
-        };
-        items.push(item);
-        if (additionalCounter == 7) {
-          additionalHours += 1;
-          additionalCounter = 0;
-        }
-        additionalCounter += 1;
-      }
-      i = +additionalCounter;
-    });
-
-    return items;
   }
 
   randomPriority() {
@@ -130,14 +89,13 @@ export class HomeComponent {
     const itemDay = this.days[itemDate.getDay()];
     const itemHour = itemDate.getHours().toString().padStart(2, '0') + ':00';
 
-    console.log(itemDate, itemDay, itemHour);
     return itemDay === day && itemHour === hour;
   }
 
   async getPreference() {
     try {
       const user = await this.dbService
-        .getUser('66354042e45dbbb4e19f0bab')
+        .getUser(this.currentUserId)
         .toPromise();
       this.user = user;
     } catch (error) {
@@ -149,4 +107,13 @@ export class HomeComponent {
     const now = new Date();
     return now.getHours().toString().padStart(2, '0') + ':00';
   }
+
+  taskToday() {
+    this.items.filter((item: any) => {
+      const itemDate = new Date(item.date);
+      return itemDate.toDateString() === new Date().toDateString();
+    });
+  }
+
+  sendReminder() {}
 }

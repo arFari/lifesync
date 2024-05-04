@@ -13,14 +13,14 @@ export class CreateTimeComponent {
   timeSpent: { [category: string]: { hours: number } } = {};
   categories = [
     {
-      key: 'Health and Fitness',
-      name: 'Health and Fitness',
+      key: 'Wellbeing',
+      name: 'Wellbeing',
       icon: 'assets/icon/hf.svg',
     },
     { key: 'Studying', name: 'Studying', icon: 'assets/icon/study.svg' },
     { key: 'Hygiene', name: 'Hygiene', icon: 'assets/icon/hygiene.svg' },
     { key: 'Eating', name: 'Eating', icon: 'assets/icon/eat.svg' },
-    { key: 'Socialising', name: 'Socialising', icon: 'assets/icon/social.svg' },
+    { key: 'Social', name: 'Social', icon: 'assets/icon/social.svg' },
     { key: 'Working', name: 'Working', icon: 'assets/icon/work.svg' },
   ];
   fixedUserId = '66354042e45dbbb4e19f0bab'; // Removed 'string' type declaration as it is redundant
@@ -30,6 +30,19 @@ export class CreateTimeComponent {
     private router: Router
   ) {}
 
+  ngOnInit() {
+    this.checkSessionStorage();
+  }
+  checkSessionStorage() {
+    const userToken = sessionStorage.getItem('authToken');
+    if (userToken) {
+      this.fixedUserId = userToken;
+      console.log('Token found in sessionStorage:', userToken);
+    } else {
+      console.log('No token found in sessionStorage.');
+      this.router.navigate(['/login']);
+    }
+  }
   toggleSelection(categoryKey: string): void {
     if (this.selectedCategories.has(categoryKey)) {
       this.selectedCategories.delete(categoryKey);

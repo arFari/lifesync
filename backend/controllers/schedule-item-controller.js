@@ -107,5 +107,23 @@ module.exports = {
 				res.status(500).json({ error: error});
       }
     }
+  },
+// Get all items by user IDs
+getAllItemsByUserId: async function (req, res) {
+  try {
+    // Assuming userId is passed directly as a route parameter
+    const userId = req.params.userId;
+
+    const items = await Item.find({ user_id: userId });
+
+    if (items.length === 0) {
+      return res.status(404).json({ error: 'No items found for the given user ID' });
+    }
+
+    res.json(items);
+  } catch (error) {
+    console.error('Error fetching items for user:', userId, error);
+    res.status(500).json({ error: 'Failed to get items' });
   }
-};
+},
+}
