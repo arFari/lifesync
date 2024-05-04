@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const { v4: uuidv4 } = require('uuid');
 var bcrypt = require('bcrypt-nodejs');
+const Item = require('./schedule-item')
 
 const userSchema = mongoose.Schema({
     username: {
@@ -26,6 +27,8 @@ const userSchema = mongoose.Schema({
 		type: Number,   
         default: 0
 	},
+    
+
 
 });
 

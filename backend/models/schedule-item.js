@@ -34,6 +34,7 @@ const itemSchema = mongoose.Schema({
 	duration: {
 		type: Number
 	}
+	
 });
 
 module.exports = mongoose.model("Item", itemSchema);

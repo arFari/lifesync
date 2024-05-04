@@ -129,5 +129,23 @@ module.exports = {
       console.error(error);
       res.status(500).json({ error: 'Failed to update time spent' });
     }
+  },
+  getTimeSpent: async function (req, res) {
+    try {
+      const userId = req.params.userId;
+      const user = await User.findById(userId);
+  
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      // Retrieve time_spent from the user document
+      const timeSpent = user.time_spent;
+  
+      return res.status(200).json({ timeSpent });
+    } catch (error) {
+      console.error('Error retrieving time_spent:', error);
+      return res.status(500).json({ message: 'Internal Server Error' });
+    }
   }
 };

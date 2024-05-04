@@ -15,4 +15,6 @@ router.put("/update", userCont.updateCategories);
 
 router.put("/update-time", userCont.updateTimeSpent);
 
+router.get("/get-time",userCont.getTimeSpent)
+
 module.exports = router;

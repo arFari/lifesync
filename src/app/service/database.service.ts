@@ -12,19 +12,25 @@ const httpOptions = {
 export class DatabaseService {
   constructor(private http: HttpClient) {}
 
-
   updateCategories(userId: string, categories: string): Observable<any> {
     const body = {
       id: userId, // Ensure the backend expects 'id' not 'userId'
-      categories: categories
+      categories: categories,
     };
     return this.http.put(`/api/user/update`, body, httpOptions);
   }
 
   // In DatabaseService
-  updateTimeSpent(userId: string, timeSpent: {category: string, hours: number}[]): Observable<any> {
+  updateTimeSpent(
+    userId: string,
+    timeSpent: { category: string; hours: number }[]
+  ): Observable<any> {
     const body = { time_spent: timeSpent };
-    return this.http.put(`/api/user/update-time`, { id: userId, ...body }, httpOptions);
+    return this.http.put(
+      `/api/user/update-time`,
+      { id: userId, ...body },
+      httpOptions
+    );
   }
 
   getItems() {
@@ -35,5 +41,5 @@ export class DatabaseService {
   }
   getUser(userId: string): Observable<any> {
     return this.http.get<any>(`api/user?id=${userId}`);
-  }  
+  }
 }
