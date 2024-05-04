@@ -10,10 +10,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { DatabaseService } from './service/database.service';
 import { CollectiblesComponent } from './collectibles/collectibles.component';
 import { TestingComponent } from './testing/testing.component';
+import { AddItemsComponent } from './add-items/add-items.component';
 
 const routes: Routes = [
   { path: "CreateTime", component: CreateTimeComponent, title: "Create Timetable" },
   { path: "collectibles", component: CollectiblesComponent, title: "Collectibles" },
+  { path: "add", component: AddItemsComponent, title: "Add Event"},
   { path: "test", component: HomeComponent, title: "Time" },
   { path: '', redirectTo: '/test', pathMatch: 'full' },
 ];
@@ -24,7 +26,8 @@ const routes: Routes = [
     HomeComponent,
     CreateTimeComponent,
     TestingComponent,
-    CollectiblesComponent
+    CollectiblesComponent,
+    AddItemsComponent,
   ],
   imports: [
     BrowserModule,

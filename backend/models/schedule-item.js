@@ -27,6 +27,12 @@ const itemSchema = mongoose.Schema({
 	},
     reminder: {
 		type: Boolean
+	},
+	categories: {
+		type: [String]
+	},
+	duration: {
+		type: Number
 	}
 });
 

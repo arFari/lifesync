@@ -23,7 +23,7 @@ const userSchema = mongoose.Schema({
         hours: Number
     }],
     score: {
-		type: Number,
+		type: Number,   
         default: 0
 	},
 
