@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./collectibles.component.css']
 })
 export class CollectiblesComponent {
+  
 
 }
