@@ -5,14 +5,19 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { CreateTimeComponent } from './create-time/create-time.component';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 import { DatabaseService } from './service/database.service';
 import { CollectiblesComponent } from './collectibles/collectibles.component';
+import { TestingComponent } from './testing/testing.component';
 
 const routes: Routes = [
-  { path: "CreateTime", component: CreateTimeComponent, title: "Create Timetable" },
-  { path: "test", component: HomeComponent, title: "Time" },
+  {
+    path: 'CreateTime',
+    component: CreateTimeComponent,
+    title: 'Create Timetable',
+  },
+  { path: 'test', component: HomeComponent, title: 'Time' },
   { path: '', redirectTo: '/test', pathMatch: 'full' },
 ];
 
@@ -21,15 +26,16 @@ const routes: Routes = [
     AppComponent,
     HomeComponent,
     CreateTimeComponent,
+    TestingComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    RouterModule.forRoot(routes, { useHash: true }), 
+    RouterModule.forRoot(routes, { useHash: true }),
     HttpClientModule,
     CommonModule,
   ],
   providers: [DatabaseService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

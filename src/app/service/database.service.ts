@@ -1,19 +1,24 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http'
-
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 const httpOptions = {
-  headers: new HttpHeaders({ "Content-Type": "application/json" }),
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DatabaseService {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  updateCategories(categories: any){
-    return this.http.put("/api/user/update", categories, httpOptions)
+  updateCategories(categories: any) {
+    return this.http.put(
+      '/api/user/update-categories',
+      categories,
+      httpOptions
+    );
+  }
+  getItems() {
+    return this.http.get('./api/schedule-item/list');
   }
 }

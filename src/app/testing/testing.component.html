@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Calendar</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .hour {
+      height: 60px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+    <div class="container-fluid"> <!-- Use container-fluid to take the whole width -->
+        <div class="row">
+          <div class="col">
+            <h2>Weekly Calendar</h2>
+            <div class="row">
+              <div class="col no-padding">Time</div>
+              <div class="col no-padding" *ngFor="let day of days">{{ day }}</div>
+            </div>
+            <div class="row" *ngFor="let hour of hours">
+              <div class="col no-padding">{{ hour }}</div>
+              <div class="col no-padding" *ngFor="let day of days">
+                <div class="hour"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular-animate.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular-aria.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular-messages.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular-resource.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular-route.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular-sanitize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular-touch.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular-cookies.min.js"></script>
+  <script>
+    var app = angular.module('calendarApp', []);
+    app.controller('calendarCtrl', function($scope) {
+      $scope.days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+      $scope.hours = ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'];
+    });
+  </script>
+</body>
+</html>

@@ -1,53 +1,85 @@
-<div class="container">
-    <div class="row mb-3">
-        <div class="col-12">
-            <!-- Weekly Timetable -->
-            <div class="border p-3">
-                <!-- Dynamically generated grid of days and times -->
-                <div class="container">
-                    <div class="container">
-                        <h1 class="mt-5">Calendar</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Calendar</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .hour {
+      height: 60px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+      <div class="row mb-3">
+          <div class="col-12">
+              <!-- Weekly Timetable -->
+              <div class="border p-3">
+                  <!-- Dynamically generated grid of days and times -->
+                  <div class="container-fluid"> <!-- Use container-fluid to take the whole width -->
+                    <div class="row">
+                      <div class="col">
+                        <h2>Weekly Calendar</h2>
                         <div class="row">
-                          <div class="col">
-                            <div class="card">
-                              <div class="card-body">
-                                <table class="table table-bordered">
-                                  <thead>
-                                    <tr>
-                                      <th scope="col" *ngFor="let day of days">{{ day }}</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr *ngFor="let week of weeks">
-                                      <td *ngFor="let day of week">{{ day }}</td>
-                                    </tr>
-                                  </tbody>
-                                </table>
+                          <div class="col no-padding">Time</div>
+                          <div class="col no-padding" *ngFor="let day of days">{{ day }}</div>
+                        </div>
+                        <div class="row" *ngFor="let hour of hours">
+                          <div class="col no-padding">{{ hour }}</div>
+                          <div class="col no-padding" *ngFor="let day of days">
+                            <div class="hour">
+                              <div *ngFor="let item of items">
+                                <div *ngIf="isItemInTimeSlot(item, day, hour)">
+                                  {{ item.name }} 
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
+                      </div>
                     </div>
-                  </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6">
-            <!-- Daily Timetable -->
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <input type="checkbox" class="form-check-input me-2">
-                    Morning Meeting at 9:00 AM
-                </li>
-                <!-- More tasks -->
-            </ul>
-        </div>
-        <div class="col-6">
-            <!-- Progress Bar -->
-            <div class="progress" style="height: 40px;">
-                <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
-            </div>
-        </div>
-    </div>
-</div>
+                </div>
+            
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular-animate.min.js"></script>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular-aria.min.js"></script>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular-messages.min.js"></script>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular-resource.min.js"></script>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular-route.min.js"></script>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular-sanitize.min.js"></script>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular-touch.min.js"></script>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular-cookies.min.js"></script>
+              <script>
+                var app = angular.module('calendarApp', []);
+                app.controller('calendarCtrl', function($scope) {
+                  $scope.days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+                  $scope.hours = ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'];
+                });
+              </script>
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-6">
+              <!-- Daily Timetable -->
+              <ul class="list-group">
+                  <li class="list-group-item">
+                      <input type="checkbox" class="form-check-input me-2">
+                      Morning Meeting at 9:00 AM
+                  </li>
+                  <!-- More tasks -->
+              </ul>
+          </div>
+          <div class="col-6">
+              <!-- Progress Bar -->
+              <div class="progress" style="height: 40px;">
+                  <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
+              </div>
+          </div>
+      </div>
+  </div>
+</body>
