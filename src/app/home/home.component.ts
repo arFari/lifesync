@@ -68,17 +68,17 @@ export class HomeComponent {
 
   generateItemsFromTimeSpent(timeSpent: { category: string; hours: number }[]) {
     const items: any[] = [];
-    let additionalCounter = 0;
+    let additionalCounter = 1;
     let additionalHours = 0;
-    let i = 0;
+    let i = 1;
     // Convert time_spent array to IItem array
     timeSpent.forEach((entry) => {
       console.log(entry);
 
       let counter = entry.hours + i;
-      for (i; i < counter; i++) {
+      for (i; i <= counter; i++) {
         if (i == 7) {
-          counter = counter - 7;
+          counter = counter - i;
           i = 0;
         }
         // Set the day of the week to Monday (0 represents Sunday, 1 represents Monday, ..., 6 represents Saturday)
@@ -88,7 +88,7 @@ export class HomeComponent {
           tomorrow.getDate() + ((1 + 7 - tomorrow.getDay()) % 7) - 1
         ); // Move to next Monday
 
-        tomorrow.setDate(tomorrow.getDate() + i);
+        tomorrow.setDate(tomorrow.getDate() + i - 1);
         tomorrow.setHours(8, 0, 0, 0);
         tomorrow.setHours(tomorrow.getHours() + additionalHours);
 
@@ -101,7 +101,7 @@ export class HomeComponent {
           reminder: true, // Set default reminder
         };
         items.push(item);
-        if (additionalCounter == 6) {
+        if (additionalCounter == 7) {
           additionalHours += 1;
           additionalCounter = 0;
         }
