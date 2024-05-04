@@ -34,7 +34,7 @@ display: none
 .dropdown-menu {
   border: none;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
-  background-color: #32cd32; /* Lime green color for dropdown background */
+  background-color: #ffffff; /* Lime green color for dropdown background */
 }
 
 .dropdown-item {
@@ -42,13 +42,13 @@ display: none
 }
 
 .dropdown-item:hover {
-  background-color: #228b22; /* Darker green background on hover */
+  background-color: #ffffff; /* Darker green background on hover */
 }
 
 /* Styling for the offcanvas */
 .offcanvas-body {
   padding: 20px;
-  background-color: #32cd32; /* Lime green color for offcanvas background */
+  background-color: #ffffff; /* Lime green color for offcanvas background */
 }
 
 .offcanvas-title {
