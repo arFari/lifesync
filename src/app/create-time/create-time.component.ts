@@ -13,15 +13,15 @@ export class CreateTimeComponent {
   timeSpent: { [category: string]: { hours: number } } = {};
   categories = [
     {
-      key: 'healthAndFitness',
+      key: 'Health and Fitness',
       name: 'Health and Fitness',
       icon: 'assets/icon/hf.svg',
     },
-    { key: 'studying', name: 'Studying', icon: 'assets/icon/study.svg' },
-    { key: 'hygiene', name: 'Hygiene', icon: 'assets/icon/hygiene.svg' },
-    { key: 'eating', name: 'Eating', icon: 'assets/icon/eat.svg' },
-    { key: 'socialising', name: 'Socialising', icon: 'assets/icon/social.svg' },
-    { key: 'working', name: 'Working', icon: 'assets/icon/work.svg' },
+    { key: 'Studying', name: 'Studying', icon: 'assets/icon/study.svg' },
+    { key: 'Hygiene', name: 'Hygiene', icon: 'assets/icon/hygiene.svg' },
+    { key: 'Eating', name: 'Eating', icon: 'assets/icon/eat.svg' },
+    { key: 'Socialising', name: 'Socialising', icon: 'assets/icon/social.svg' },
+    { key: 'Working', name: 'Working', icon: 'assets/icon/work.svg' },
   ];
   fixedUserId = '66354042e45dbbb4e19f0bab'; // Removed 'string' type declaration as it is redundant
 
