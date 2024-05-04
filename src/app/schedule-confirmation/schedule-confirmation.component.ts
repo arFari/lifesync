@@ -157,7 +157,7 @@ export class ScheduleConfirmationComponent {
       console.log(this.items);
       this.items.forEach(item => {
         this.dbService.addItems(item).subscribe((result: any) => {
-          // this.router.navigate(['']);
+          this.router.navigate(['']);
           console.log(result)
         },
           (error: HttpErrorResponse) => {
