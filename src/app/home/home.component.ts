@@ -13,6 +13,8 @@ export class HomeComponent {
   item: any;
   items: any[] = [];
   timeSpent: any = { category: '', hours: 0 };
+  currentDayIndex: number = 0;
+  currentTimeIndex: number = 0;
 
   user: any = {
     _id: 'sample_id',
@@ -33,6 +35,8 @@ export class HomeComponent {
     'Saturday',
   ];
   hours: string[] = [
+    '01:00',
+    '02:00',
     '08:00',
     '09:00',
     '10:00',
@@ -57,6 +61,9 @@ export class HomeComponent {
     let balancedSchedule = this.generateItemsFromTimeSpent(tempTime);
     console.log('schedule: ' + balancedSchedule);
     this.items = balancedSchedule;
+
+    this.currentDayIndex = new Date().getDay(); // 0 for Sunday, 1 for Monday, etc.
+    this.currentTimeIndex = new Date().getHours(); // 0 to 23 for hours
   }
 
   getItems() {
@@ -136,5 +143,10 @@ export class HomeComponent {
     } catch (error) {
       console.error('Error fetching user:', error);
     }
+  }
+
+  getCurrentHour(): string {
+    const now = new Date();
+    return now.getHours().toString().padStart(2, '0') + ':00';
   }
 }

@@ -1,41 +1,35 @@
-<div class="container" style="background-color: #e6e6e6;">
-    <h2>Let's confirm yout weekly schedule!!!</h2> <!-- Add the title here -->
-    <div class="row mb-3">
-        <div class="col-12">
-            <!-- Weekly Timetable -->
-            <div class="border p-3">
-                <!-- Dynamically generated grid of days and times -->
-                <div class="container-fluid"> <!-- Use container-fluid to take the whole width -->
-                    <div class="row">
-                        <div class="col">
-                            <h2>Weekly Calendar</h2>
-                            <div class="row">
-                                <div class="col no-padding">Time</div>
-                                <div class="col no-padding" *ngFor="let day of days">{{ day }}</div>
-                            </div>
-                            <div class="row" *ngFor="let hour of hours">
-                                <div class="col no-padding">{{ hour }}</div>
-                                <div class="col no-padding" *ngFor="let day of days">
-                                    <div class="hour">
-                                        <div *ngFor="let item of items">
-                                            <div *ngIf="isItemInTimeSlot(item, day, hour)">
-                                                {{ item.category }} 
-                                            </div>
-                                        </div>
+<div class="pt-5">
+    <div class="container rounded-5 py-3" style="background-color: #b86434;">
+        <h2 class="text-center text-white">Personalised Weekly Schedule</h2> <!-- Add the title here -->
+        <div class="row mb-3">
+            <div class="col-12">
+                <!-- Weekly Timetable -->
+                <!-- Dynamically generated table of days and times -->
+                <table class="table" style="background-color: #b86434">
+                    <thead>
+                        <tr>
+                            <th class="text-white" scope="col" style="background-color: #b86434;">Time</th>
+                            <th class="text-white" scope="col" *ngFor="let day of days" style="background-color: #b86434;">{{ day }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let hour of hours">
+                            <th class="text-white" scope="row" style="background-color: #b86434;">{{ hour }}</th>
+                            <td class="text-white" *ngFor="let day of days" style="background-color: #b86434;">
+                                <div *ngFor="let item of items">
+                                    <div *ngIf="isItemInTimeSlot(item, day, hour)" style="height: 20px;">
+                                        {{ item.category }}
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="mt-3 d-flex justify-content-center"> <!-- Center the buttons -->
+                    <button class="btn btn-primary me-2" (click)="confirmSchedule()">Confirm</button>
+                    <button class="btn btn-danger" (click)="cancel()">Cancel</button>
                 </div>
             </div>
-            <!-- Confirmation buttons -->
-            <div class="mt-3 d-flex justify-content-center"> <!-- Center the buttons -->
-                <button class="btn btn-primary me-2" (click)="confirmSchedule()">Confirm</button>
-                <button class="btn btn-secondary" (click)="cancel()">Cancel</button>
-            </div>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
-            <!-- Your Angular scripts -->
         </div>
     </div>
 </div>
