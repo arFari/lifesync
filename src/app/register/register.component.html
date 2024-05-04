@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <title>Signup Page</title>
+</head>
+<body>
+    <div class="container pt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title text-center">Signup</h2>
+                        <form (ngSubmit)="register()" #signupForm="ngForm">
+                            <div class="form-group">
+                                <label for="username">Username *</label>
+                                <input type="text" class="form-control" id="username" [(ngModel)]="username" name="username" #usernameField="ngModel" required>
+                                <div *ngIf="showError" class="alert alert-danger mt-3">
+                                    Username already exists
+                                  </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="firstName">First Name *</label>
+                                    <input type="text" class="form-control" id="firstName" [(ngModel)]="firstName" name="firstName" #firstNameField="ngModel" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="lastName">Last Name *</label>
+                                    <input type="text" class="form-control" id="lastName" [(ngModel)]="lastName" name="lastName" #lastNameField="ngModel" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" class="form-control" id="email" [(ngModel)]="email" name="email" #emailField="ngModel" required>
+                            </div>
+                            <div class="form-group position-relative">
+                                <label for="loginPassword">Password *</label>
+                                <input [type]="showPassword ? 'text' : 'password'" class="form-control" id="loginPassword" [(ngModel)]="password" name="loginPassword" required>
+                                <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'" class="password-icon" (click)="togglePasswordVisibility()"></i>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block" [disabled]="!signupForm.valid">Submit</button>
+                            <p class="text-center mt-3">Already have an account? <a href="/login">Login</a></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
