@@ -1,0 +1,28 @@
+<div class="container pt-5" style="padding-top: 20px;">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title text-center">Login</h2>
+            <form (ngSubmit)="login()">
+              <div class="form-group position-relative">
+                <label for="userName">Username</label>
+                <input type="text" class="form-control" id="userName" [(ngModel)]="username" name="userName" required>
+              </div>
+              <div class="form-group position-relative">
+                <label for="loginPassword">Password</label>
+                <input [type]="showPassword ? 'text' : 'password'" class="form-control pr-5" id="loginPassword" [(ngModel)]="password" name="loginPassword" required>
+                <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'" class="password-icon" (click)="togglePasswordVisibility()"></i>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">Login</button>
+              <!-- Error message section -->
+              <div *ngIf="showError" class="alert alert-danger mt-3">
+                {{ errorMessage }}
+              </div>
+              <p class="text-center mt-3">Don't have an account? <a href="/register">Register</a></p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

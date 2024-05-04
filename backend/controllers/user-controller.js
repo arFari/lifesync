@@ -9,25 +9,31 @@ validPassword = function(password, hashPassword) {
 module.exports = {
   register: async function (req, res) {
     try {
-      const {username, password, name} = req.body;
+        const { username, password, name } = req.body;
 
-      var new_user = new User({
-        username: username,
-        name: name
-      });
-    
-      new_user.password = new_user.generateHash(password);
-      new_user.save()
+        // Check if username already exists
+        const existingUser = await User.findOne({ username });
+        if (existingUser) {
+            return res.status(400).json({ error: 'Username already exists' });
+        }
 
-      res.status(200).json({ result: new_user._id });
+        var new_user = new User({
+            username: username,
+            name: name
+        });
+
+        new_user.password = new_user.generateHash(password);
+        await new_user.save();
+
+        res.status(200).json({ result: new_user._id });
     } catch (error) {
-      if (error instanceof mongoose.Error.ValidationError) {
-				res.status(400).json({ error: error });
-			} else {
-				res.status(500).json({ error: 'Failed to input' });
-      }
+        if (error instanceof mongoose.Error.ValidationError) {
+            res.status(400).json({ error: error });
+        } else {
+            res.status(500).json({ error: 'Failed to input' });
+        }
     }
-  },
+},
 
   login: async function (req, res) {
     try {

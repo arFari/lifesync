@@ -1,0 +1,81 @@
+body {
+    font-family: 'Arial', sans-serif; /* Modern font */
+    background-color: transparent;
+  }
+  
+  .card {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Adds shadow for depth */
+    background-color: white; /* Or use a light pleasant color */
+    border-radius: 15px; /* Rounded corners */
+    padding: 20px; /* Adds padding inside the card for overall internal spacing */
+  }
+  
+  .card-title {
+    color: #333; /* Dark gray for text */
+    margin-bottom: 20px; /* Adds more space below the title */
+  }
+  
+  .form-group {
+    margin-bottom: 20px; /* Adjusts space between form elements */
+  }
+  
+  .form-group label {
+    color: #666; /* Medium gray for labels */
+    display: block; /* Ensures labels are on a new line, adjust as needed */
+    margin-bottom: 5px; /* Space between label and input */
+  }
+  
+  .form-control {
+    border-radius: 4px; /* Slightly rounded edges for form inputs */
+    border: 1px solid #ccc; /* Light gray border */
+    padding: 12px; /* Increases padding for a taller input field */
+  }
+  
+  .btn-primary {
+    background-color: #0056b3; /* Brighter blue */
+    border: none; /* Remove default border */
+    border-radius: 4px; /* Rounded button edges */
+    padding: 10px 0; /* Top and bottom padding */
+    font-size: 16px; /* Larger font size */
+  }
+  
+  .btn-primary.btn-block {
+    display: block;
+    width: 100%; /* Ensures the button stretches to full width */
+  }
+  
+  .btn-primary:hover {
+    background-color: #004094; /* Slightly darker blue on hover */
+  }
+  
+  a {
+    color: #007bff; /* Bootstrap's default blue */
+  }
+
+  .alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+  }
+  
+  .btn-outline-secondary {
+    padding: 0.375rem 0.75rem; /* Adjust padding to align with the form */
+    margin-top: 5px; /* Small top margin for spacing */
+  }
+  .position-relative {
+    position: relative;
+  }
+  
+  .password-icon {
+    position: absolute;
+    top: 57%; /* Centers the icon vertically */
+    right: 15px; /* Adjust based on your preference */
+    cursor: pointer;
+    color: #495057;
+}
+  
+  .form-control {
+    padding-right: 40px; /* Make room for the icon */
+  }
+  
+  
