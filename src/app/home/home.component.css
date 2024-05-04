@@ -2,6 +2,6 @@
     padding: 0 !important; /* Important to override Bootstrap's default padding */
   }
 .current-time {
-  background-color: rgba(117, 173, 135, 0.75); /* Change color and opacity as needed */
+  background-color: rgba(117, 173, 135, 0.25); /* Change color and opacity as needed */
   }
   

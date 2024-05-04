@@ -31,13 +31,12 @@
                         <div class="row" *ngFor="let hour of hours; let i = index">
                           <div class="col no-padding" >{{ hour }}</div>
                           <div class="col no-padding" *ngFor="let day of days; let j = index">
-                            <div class="hour">
-                              <div *ngIf="j === currentDayIndex && i === currentTimeIndex" class="current-time">-></div>
+                            <div class="hour" [ngClass]="{'current-time': j === currentDayIndex && getCurrentHour() === hour}">
                               <div *ngFor="let item of items">
-                                <div *ngIf="isItemInTimeSlot(item, day, hour)">
-                                  {{ item.category }} 
+                                    <div *ngIf="isItemInTimeSlot(item, day, hour)">
+                                      {{ item.name }} 
+                                    </div>
                                 </div>
-                              </div>
                             </div>
                           </div>
                         </div>
