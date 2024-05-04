@@ -35,7 +35,6 @@ export class HomeComponent {
     'Saturday',
   ];
   hours: string[] = [
-    '05:00',
     '08:00',
     '09:00',
     '10:00',
