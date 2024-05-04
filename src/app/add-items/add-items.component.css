@@ -1,9 +1,12 @@
   body {
     font-family: Arial, sans-serif;
+    background-color: transparent;
   }
   .container {
+    padding-top: 50px;
+    position: relative;
+    top: 50px;
     max-width: 600px;
-    margin: 50px auto;
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
