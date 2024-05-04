@@ -104,16 +104,16 @@
           </div>
           <div class="col-6 text-center custom-col">
             <img src="assets/game/leebitFront.png" alt="Leebit Front Image" class="responsive-img">
-            <h5 class="custom-header">Next Reward Progress</h5>
+            <h5 class="custom-header"><b>Next Reward Progress</b></h5>
             <div class="custom-progress-container">
               <div class="progress custom-progress-bar">
-                <div class="progress-bar progress-bar-striped bg-greene" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-                  50%
+                <div class="progress-bar progress-bar-striped bg-greene" role="progressbar" 
+                     [style.width]="progress + '%'"
+                     [attr.aria-valuenow]="progress" aria-valuemin="0" aria-valuemax="100">
+                  {{ progress }}%
+                </div>
               </div>
-
               </div>
-            </div>
-
             </div>
       </div>
   </div>

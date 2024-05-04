@@ -16,6 +16,7 @@ export class HomeComponent {
   currentDayIndex: number = 0;
   currentTimeIndex: number = 0;
   currentUserId: string = '';
+  progress: number = 0;
   user: any = {
     _id: 'sample_id',
     username: 'sample_username',
@@ -55,6 +56,7 @@ export class HomeComponent {
   async ngOnInit() {
     this.checkSessionStorage();
     this.getItems();
+    this.getCurrentProgress();
 
     this.currentDayIndex = new Date().getDay(); // 0 for Sunday, 1 for Monday, etc.
     this.currentTimeIndex = new Date().getHours(); // 0 to 23 for hours
@@ -114,5 +116,16 @@ export class HomeComponent {
     });
   }
 
+  getCurrentProgress() {
+    this.dbService.getUser(this.currentUserId).subscribe({
+      next: (data) => {
+        console.log(data.score)
+        this.progress = Math.floor(data.score/1000 * 100); // Assuming 'progress' is the field you need
+      },
+      error: (error) => {
+        console.error('Error fetching user data:', error);
+      }
+    });
+  }
   sendReminder() {}
 }
