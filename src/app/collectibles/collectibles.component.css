@@ -5,3 +5,8 @@
     background-repeat: repeat;
     background-size: cover;
 }
+
+.rounded-circle {
+    border: 2px solid white; /* Adds a white border */
+    box-shadow: 0 0 5px #000; /* Optional: Adds a shadow for depth */
+}
