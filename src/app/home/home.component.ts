@@ -135,6 +135,7 @@ export class HomeComponent {
   }
   claimReward() {
     console.log('Reward Claim');
+    
     //Add collectibles to user collection
     let res = this.dbService
     .addScore({
@@ -174,6 +175,7 @@ export class HomeComponent {
       })
       .subscribe(
         () => {
+          this.getCurrentProgress();
           console.log('yesyesyeys');
         },
         (error) => {

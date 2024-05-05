@@ -30,6 +30,7 @@ export class AppComponent {
     sessionStorage.clear();
     this.router.navigate(['/login']);
   }
+  
 
 }
 
