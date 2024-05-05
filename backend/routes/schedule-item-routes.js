@@ -7,6 +7,10 @@ router.post("/add", schItemCont.newItem);
 
 router.get("/list", schItemCont.listItems);
 
+router.get("/list/not-done", schItemCont.listNotDoneItems);
+
+router.get("/dayTracker/:userId",schItemCont.getItemsWithSameDateAsToday)
+
 router.get("/:id", schItemCont.getItem);
 
 router.delete("/delete/:id", schItemCont.deleteItem);

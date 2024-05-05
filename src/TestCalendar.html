@@ -8,54 +8,20 @@
   <style>
     .hour {
       height: 60px;
-      border: 1px solid white;
-    }
-    .no-padding {
-      padding: 0;
-    }
-    .no-padding {
-      padding: 0;
+      border: 1px solid #ccc;
     }
   </style>
 </head>
 
-<body ng-app="calendarApp" ng-controller="calendarCtrl">
+<body>
   <div class="container">
-      <div class="row rounded-div mb-3" style="background-color: white;">
+      <div class="row mb-3">
           <div class="col-12">
               <!-- Weekly Timetable -->
-              <div class="p-3 ">
+              <div class="border p-3">
                   <!-- Dynamically generated grid of days and times -->
                   <div class="container-fluid"> <!-- Use container-fluid to take the whole width -->
-                    <div class="calendar">
-                      <div class="outer">
-                        <table>
-                          <thead>
-                            <tr>
-                              <th class="headcol"></th>
-                              <th *ngFor="let day of days">{{ day }}</th>
-                            </tr>
-                          </thead>
-                        </table>
-                        <div class="wrap">
-                          <table>
-                            <tbody>
-                              <tr *ngFor="let hour of hours">
-                                <td class="headcol">{{ hour }}</td>
-                                <td *ngFor="let day of days; let j = index">
-                                  <div *ngFor="let item of items" [ngClass]="{'current-time': j === currentDayIndex && getCurrentHour() === hour}">
-                                    <div *ngIf="isItemInTimeSlot(item, day, hour)">
-                                      {{ item.name }}
-                                    </div>
-                                  </div>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- <div class="row">
+                    <div class="row">
                       <div class="col">
                         <h2>Weekly Calendar</h2>
                         <div class="row">
@@ -71,15 +37,11 @@
                                   {{ item.name }} 
                                 </div>
                               </div>
-                                <div *ngIf="isItemInTimeSlot(item, day, hour)">
-                                  {{ item.name }} 
-                                </div>
-                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div> -->
+                    </div>
                 </div>
             
               <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
@@ -102,29 +64,22 @@
           </div>
       </div>
       <div class="row">
-        <div class="col-6">
-          <!-- Daily Timetable -->
-          <ul class="list-group">
-            <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let task of todayTasks">
-                <span>{{ task.name }} at {{ formatDate(task.date) }}</span>
-                <input type="checkbox" class="form-check-input"  (change)="onCheckboxChange(task)">
-            </li>
-          </ul>
-        </div>
-        <div class="col-6 text-center custom-col">
-          <img src="assets/game/leebitFront.png" alt="Leebit Front Image" class="responsive-img">
-          <h5 class="custom-header"><b>Next Reward Progress</b></h5>
-          <div class="custom-progress-container">
-            <div class="progress custom-progress-bar">
-              <div class="progress-bar progress-bar-striped bg-greene" role="progressbar" 
-                   [style.width]="progress + '%'"
-                   [attr.aria-valuenow]="progress" aria-valuemin="0" aria-valuemax="100">
-                {{ progress }}%
-              </div>
-            </div>
-            </div>
+          <div class="col-6">
+              <!-- Daily Timetable -->
+              <ul class="list-group">
+                  <li class="list-group-item">
+                      <input type="checkbox" class="form-check-input me-2">
+                      Morning Meeting at 9:00 AM
+                  </li>
+                  <!-- More tasks -->
+              </ul>
           </div>
-    </div>
-</div>
+          <div class="col-6">
+              <!-- Progress Bar -->
+              <div class="progress" style="height: 40px;">
+                  <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
+              </div>
+          </div>
+      </div>
+  </div>
 </body>
-</html>
