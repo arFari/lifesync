@@ -64,7 +64,11 @@ export class RegisterComponent {
   }
   randomCollectibles(id:any){
     const randomIndex = Math.floor(Math.random() * this.collectiblesPaths.length);
-    this.databaseService.updateReward(id, this.collectiblesPaths[randomIndex]).subscribe({
+    let res = this.collectiblesPaths[randomIndex];
+    this.databaseService.updateReward({
+      id: id, 
+      res: res
+    }).subscribe({
       next: (response) => {
         // Handle the successful update here
         console.log('Update successful', response);

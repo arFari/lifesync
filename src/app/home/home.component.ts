@@ -12,6 +12,16 @@ export class HomeComponent {
   modalElement!: ElementRef;
   constructor(private dbService: DatabaseService, private router: Router) {}
 
+  collectiblesPaths = [
+    'bbokariFront',
+    'dwaekkiFront',
+    'foxinyFront',
+    'jiniretFront',
+    'leebitFront',
+    'puppymFront',
+    'quokkaFront',
+    'wolfFront'
+  ];
   item: any;
   items: any[] = [];
   timeSpent: any = { category: '', hours: 0 };
@@ -101,6 +111,32 @@ export class HomeComponent {
     this.modalElement.nativeElement.style.display = 'none';
     this.getCurrentProgress();
     console.log("masuk func");
+  }
+
+  randomCollectibles(id:any){
+    let randomIndex;
+    let res;
+    do {
+      randomIndex = Math.floor(Math.random() * this.collectiblesPaths.length);
+      res = this.collectiblesPaths[randomIndex];
+      this.dbService.updateReward({
+        id: id, 
+        res: res
+      }).subscribe({
+        next: (response) => {
+          // Handle the successful update here
+          console.log('Update successful', response);
+        },
+        error: (error) => {
+          // Handle errors here
+          console.log('Error updating reward:', error);
+        },
+        complete: () => {
+          // Handle completion (if necessary)
+          console.log('Update operation completed.');
+        }
+      });
+    } while (this.user.collectibles.includes(res));
   }
 
   onModalHidden() {
@@ -214,6 +250,7 @@ export class HomeComponent {
           }
         }
       );
+      this.randomCollectibles(this.currentUserId);
   }
 
   formatDate(dateString: string): string {
