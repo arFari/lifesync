@@ -17,4 +17,8 @@ router.put("/update-time", userCont.updateTimeSpent);
 
 router.get("/get-time",userCont.getTimeSpent)
 
+router.put("/add-collectible", userCont.addCollectible)
+
+router.put("/update-reward", userCont.updateReward)
+
 module.exports = router;

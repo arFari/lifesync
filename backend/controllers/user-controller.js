@@ -122,6 +122,54 @@ module.exports = {
     }
   },
 
+  updateReward: async function (req, res) {
+    try {
+      const {id, reward} = req.body;
+
+      const user = await User.updateOne(
+        { _id: id },
+        { 
+            $set: { reward: reward },
+            
+        },
+        { new: false }
+      );
+
+      if (user['modifiedCount'] == 0) {
+        return res.status(404).json({ status: 'ID not found' });
+      }
+
+      res.json({ status: 'Update successful' });
+    } catch (error) {
+      if (error instanceof mongoose.Error.ValidationError) {
+				res.status(400).json({ error: error });
+			} else {
+				res.status(500).json({ error: error });
+      }
+    }
+  },
+
+  addCollectible: async function (req, res) {
+    try {
+      const { id, collectible } = req.body;
+      const user = await User.updateOne(
+        { _id: id },
+        { 
+            $push: { collectibles: collectible },
+            
+        },
+        { new: false }
+      );
+      res.json({ status: 'Update successful' });
+    } catch (error) {
+      if (error instanceof mongoose.Error.ValidationError) {
+				res.status(400).json({ error: error });
+			} else {
+				res.status(500).json({ error: error });
+      }
+    }
+  },
+
   updateTimeSpent: async function (req, res) {
     try {
       const { id, time_spent,startTime } = req.body;
@@ -138,6 +186,7 @@ module.exports = {
       res.status(500).json({ error: 'Failed to update time spent' });
     }
   },
+
   getTimeSpent: async function (req, res) {
     try {
       const userId = req.params.userId;

@@ -30,6 +30,12 @@ const userSchema = mongoose.Schema({
     startTime:{
         type:Number,
         default:8
+    },
+    collectibles:{
+        type:[String]
+    },
+    reward:{
+        type: String
     }
     
 
