@@ -9,6 +9,16 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
+  collectiblesPaths = [
+    'bbokariFront',
+    'dwaekkiFront',
+    'foxinyFront',
+    'jiniretFront',
+    'leebitFront',
+    'puppymFront',
+    'quokkaFront',
+    'wolfFront'
+  ];
   username: string = '';
   email: string = '';
   password: string = '';
@@ -29,6 +39,7 @@ export class RegisterComponent {
     this.databaseService.register(this.username, this.password, fullName).subscribe({
       next: (response: any) => {
         console.log('Registration successful', response);
+        this.randomCollectibles(response.result);
         this.router.navigate(['/login']);
       },
       error: (error: HttpErrorResponse) => {
@@ -50,5 +61,22 @@ export class RegisterComponent {
   }
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
+  }
+  randomCollectibles(id:any){
+    const randomIndex = Math.floor(Math.random() * this.collectiblesPaths.length);
+    this.databaseService.updateReward(id, this.collectiblesPaths[randomIndex]).subscribe({
+      next: (response) => {
+        // Handle the successful update here
+        console.log('Update successful', response);
+      },
+      error: (error) => {
+        // Handle errors here
+        console.log('Error updating reward:', error);
+      },
+      complete: () => {
+        // Handle completion (if necessary)
+        console.log('Update operation completed.');
+      }
+    });
   }
 }

@@ -139,7 +139,7 @@ module.exports = {
         return res.status(404).json({ status: 'ID not found' });
       }
 
-      res.json({ status: 'Update successful' });
+      res.status(200).json({ status: 'Update successful' });
     } catch (error) {
       if (error instanceof mongoose.Error.ValidationError) {
 				res.status(400).json({ error: error });

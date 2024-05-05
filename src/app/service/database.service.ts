@@ -74,4 +74,11 @@ export class DatabaseService {
     console.log(data);
     return this.http.put<any>('/api/user/add-score', data, httpOptions);
   }
+  updateReward(userId: string, reward: string): Observable<any> {
+    const body = {
+      id: userId, // Ensure the backend expects 'id' not 'userId'
+      reward: reward,
+    };
+    return this.http.put(`/api/user/update-reward`, body, httpOptions);
+  }
 }
