@@ -1,7 +1,7 @@
 import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { DatabaseService } from '../service/database.service';
 import { Router } from '@angular/router';
-import {Modal} from 'bootstrap'
+import { Modal } from 'bootstrap';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +21,7 @@ export class HomeComponent implements AfterViewInit {
   currentUserId: string = '';
   progress: number = 0;
   todayTasks: any[] = [];
-  score= 0;
+  score = 0;
   gifted = false;
   user: any = {
     _id: 'sample_id',
@@ -70,7 +70,9 @@ export class HomeComponent implements AfterViewInit {
     this.checkSessionStorage();
     this.getItems();
     this.getCurrentProgress();
-    this.getTodayTasks();
+    this.getTodayTasks().then(() => {
+      this.sendReminder(); // Call after today's tasks are fetched
+    });
     this.getPreference();
     this.gifted = false;
     this.currentDayIndex = new Date().getDay(); // 0 for Sunday, 1 for Monday, etc.
@@ -84,7 +86,7 @@ export class HomeComponent implements AfterViewInit {
     this.getPreference();
     this.gifted = false;
   }
-  
+
   checkSessionStorage() {
     const userToken = sessionStorage.getItem('authToken');
     if (userToken) {
@@ -96,15 +98,15 @@ export class HomeComponent implements AfterViewInit {
     }
   }
 
-  show(modalElement: Element){
-    const modal=new Modal(modalElement);
+  show(modalElement: Element) {
+    const modal = new Modal(modalElement);
     this.claimReward();
     modal.show();
   }
 
   onModalHidden() {
     this.getCurrentProgress();
-    console.log("masuk func");
+    console.log('masuk func');
   }
 
   getItems() {
@@ -151,9 +153,9 @@ export class HomeComponent implements AfterViewInit {
   getCurrentProgress() {
     this.dbService.getUser(this.currentUserId).subscribe({
       next: (data) => {
-        console.log(data.score)
-        this.score = data.score
-        this.progress = Math.floor(data.score/500 * 100); // Assuming 'progress' is the field you need
+        console.log(data.score);
+        this.score = data.score;
+        this.progress = Math.floor((data.score / 500) * 100); // Assuming 'progress' is the field you need
       },
       error: (error) => {
         console.error('Error fetching user data:', error);
@@ -161,34 +163,58 @@ export class HomeComponent implements AfterViewInit {
     });
   }
 
-  getTodayTasks() {
-    this.dbService.getTodayTasks(this.currentUserId).subscribe((item: any) => {
-      console.log(item);
-      this.todayTasks = item;
+  sortTasksByDate(): void {
+    // Ensure all date properties are Date objects and sort them
+    this.todayTasks.sort((a, b) => {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      return dateA.getTime() - dateB.getTime(); // Sorts in ascending order
+    });
+  }
+
+  // Example of calling this method after fetching data or before a relevant action
+  getTodayTasks(): Promise<any[]> {
+    return new Promise((resolve, reject) => {
+      this.dbService.getTodayTasks(this.currentUserId).subscribe({
+        next: (tasks: any[]) => {
+          this.todayTasks = tasks;
+          // Convert date strings to Date objects if not already handled
+          this.todayTasks.forEach((task) => {
+            task.date = new Date(task.date);
+          });
+          // Sort the tasks by date
+          this.sortTasksByDate();
+          resolve(tasks);
+        },
+        error: (error) => {
+          console.error("Failed to fetch today's tasks:", error);
+          reject(error);
+        },
+      });
     });
   }
 
   claimReward() {
     console.log('Reward Claim');
-    
+
     //Add collectibles to user collection
     let res = this.dbService
-    .addScore({
-      id: this.currentUserId,
-      score: -500,
-    })
-    .subscribe(
-      () => {
-        console.log('points deducted');
-        this.getCurrentProgress;
-        console.log(this.progress)
-      },
-      (error) => {
-        console.log(error);
-        if (error.status === 400) {
+      .addScore({
+        id: this.currentUserId,
+        score: -500,
+      })
+      .subscribe(
+        () => {
+          console.log('points deducted');
+          this.getCurrentProgress;
+          console.log(this.progress);
+        },
+        (error) => {
+          console.log(error);
+          if (error.status === 400) {
+          }
         }
-      }
-    );
+      );
   }
 
   formatDate(dateString: string): string {
@@ -236,9 +262,31 @@ export class HomeComponent implements AfterViewInit {
           }
         }
       );
-      this.score = this.score + task.points
+    this.score = this.score + task.points;
     console.log();
     this.todayTasks = this.todayTasks.filter((item) => item.id !== task.id);
   }
-  sendReminder() {}
+  sendReminder() {
+    this.todayTasks.forEach((item) => {
+      // Convert date string to Date object
+      const itemDate = new Date(item.date);
+
+      console.log(item);
+      if (item.reminder) {
+        const now = new Date();
+        const tenMinutesBefore = new Date(itemDate.getTime() - 10 * 60000);
+        const delay = tenMinutesBefore.getTime() - now.getTime();
+        console.log(delay);
+
+        if (delay > 0) {
+          setTimeout(() => {
+            console.log(`Reminder: ${item.name} is scheduled at ${itemDate}.`);
+            window.confirm(
+              `Reminder: ${item.name} is scheduled at ${itemDate}.`
+            );
+          }, delay);
+        }
+      }
+    });
+  }
 }
