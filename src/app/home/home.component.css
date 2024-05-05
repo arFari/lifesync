@@ -327,3 +327,16 @@ body{
   background-color: #4CAF50; /* Green color */
 }
 
+.hour {
+  height: 60px;
+  border: 1px solid white;
+}
+
+.no-padding {
+  padding: 0;
+}
+
+.no-padding {
+  padding: 0;
+}
+

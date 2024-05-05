@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { DatabaseService } from '../service/database.service';
 import { Router } from '@angular/router';
+import {Modal} from 'bootstrap'
 
 @Component({
   selector: 'app-home',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
-  constructor(private dbService: DatabaseService, private router: Router) {}
+  constructor(private dbService: DatabaseService, private router: Router, private cdr: ChangeDetectorRef) {}
 
   item: any;
   items: any[] = [];
@@ -18,6 +19,8 @@ export class HomeComponent {
   currentUserId: string = '';
   progress: number = 0;
   todayTasks: any[] = [];
+  score= 0;
+  gifted = false;
   user: any = {
     _id: 'sample_id',
     username: 'sample_username',
@@ -60,9 +63,19 @@ export class HomeComponent {
     this.getCurrentProgress();
     this.getTodayTasks();
     this.getPreference();
+    this.gifted = false;
     this.currentDayIndex = new Date().getDay(); // 0 for Sunday, 1 for Monday, etc.
     this.currentTimeIndex = new Date().getHours(); // 0 to 23 for hours
   }
+
+  ngOnChanges() {
+    this.getItems();
+    this.getCurrentProgress();
+    this.getTodayTasks();
+    this.getPreference();
+    this.gifted = false;
+  }
+  
   checkSessionStorage() {
     const userToken = sessionStorage.getItem('authToken');
     if (userToken) {
@@ -72,6 +85,17 @@ export class HomeComponent {
       console.log('No token found in sessionStorage.');
       this.router.navigate(['/login']);
     }
+  }
+
+  show(modalElement: Element){
+    const modal=new Modal(modalElement);
+    this.claimReward();
+    this.getCurrentProgress();
+    modal.show();
+  }
+
+  onModalHidden() {
+    location.reload();
   }
 
   getItems() {
@@ -119,7 +143,9 @@ export class HomeComponent {
     this.dbService.getUser(this.currentUserId).subscribe({
       next: (data) => {
         console.log(data.score)
+        this.score = data.score
         this.progress = Math.floor(data.score/500 * 100); // Assuming 'progress' is the field you need
+        this.cdr.detectChanges();
       },
       error: (error) => {
         console.error('Error fetching user data:', error);
@@ -133,6 +159,7 @@ export class HomeComponent {
       this.todayTasks = item;
     });
   }
+
   claimReward() {
     console.log('Reward Claim');
     //Add collectibles to user collection
@@ -197,6 +224,7 @@ export class HomeComponent {
           }
         }
       );
+      this.score = this.score + task.points
     console.log();
     this.todayTasks = this.todayTasks.filter((item) => item.id !== task.id);
   }
