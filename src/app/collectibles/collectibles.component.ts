@@ -37,9 +37,8 @@ export class CollectiblesComponent {
   getCurrentProgress() {
     this.dbService.getUser(this.currentUserId).subscribe({
       next: (data) => {
-        console.log(data.score);
-        this.progress = Math.floor((data.score / 1000) * 100); 
-        console.log(this.progress)// Assuming 'progress' is the field you need
+        console.log(data.score)
+        this.progress = Math.floor(data.score/500 * 100); // Assuming 'progress' is the field you need
       },
       error: (error) => {
         console.error('Error fetching user data:', error);

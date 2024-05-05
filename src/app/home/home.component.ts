@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { DatabaseService } from '../service/database.service';
 import { Router } from '@angular/router';
 import {Modal} from 'bootstrap'
@@ -8,8 +8,10 @@ import {Modal} from 'bootstrap'
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent {
-  constructor(private dbService: DatabaseService, private router: Router, private cdr: ChangeDetectorRef) {}
+export class HomeComponent implements AfterViewInit {
+  @ViewChild('modal')
+  modalElement!: ElementRef;
+  constructor(private dbService: DatabaseService, private router: Router) {}
 
   item: any;
   items: any[] = [];
@@ -57,6 +59,13 @@ export class HomeComponent {
     '22:00',
   ];
 
+  ngAfterViewInit() {
+    this.modalElement.nativeElement.addEventListener('hidden.bs.modal', () => {
+      this.getCurrentProgress();
+      console.log('Modal hidden event fired');
+    });
+  }
+
   async ngOnInit() {
     this.checkSessionStorage();
     this.getItems();
@@ -90,12 +99,12 @@ export class HomeComponent {
   show(modalElement: Element){
     const modal=new Modal(modalElement);
     this.claimReward();
-    this.getCurrentProgress();
     modal.show();
   }
 
   onModalHidden() {
-    location.reload();
+    this.getCurrentProgress();
+    console.log("masuk func");
   }
 
   getItems() {
@@ -145,7 +154,6 @@ export class HomeComponent {
         console.log(data.score)
         this.score = data.score
         this.progress = Math.floor(data.score/500 * 100); // Assuming 'progress' is the field you need
-        this.cdr.detectChanges();
       },
       error: (error) => {
         console.error('Error fetching user data:', error);
@@ -172,6 +180,8 @@ export class HomeComponent {
     .subscribe(
       () => {
         console.log('points deducted');
+        this.getCurrentProgress;
+        console.log(this.progress)
       },
       (error) => {
         console.log(error);
