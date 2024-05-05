@@ -94,11 +94,10 @@ getItemsWithSameDateAsToday: async function(req,res){
         return res.status(404).json({ error: 'Item not found' });
       }
 
-      const result = await Item.deleteOne({ id: categoryId });
+      const result = await Item.deleteOne({ id: schItemId });
 
       if (result.deletedCount > 0) {
-        res.json({ acknowledged: true, deletedCount: result.deletedCount });
-        deleteCounter();
+        res.status(200).json({ acknowledged: true, deletedCount: result.deletedCount });
       } else {
         res.status(404).json({ error: 'Item not found' });
       }
@@ -106,7 +105,7 @@ getItemsWithSameDateAsToday: async function(req,res){
       if (error instanceof mongoose.Error.ValidationError) {
 				res.status(400).json({ error: 'Invalid item data' });
 			} else {
-				res.status(500).json({ error: 'Failed to delete item' });
+				res.status(500).json({ error: error });
       }
     }
   },

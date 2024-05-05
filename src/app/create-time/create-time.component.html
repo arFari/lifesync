@@ -31,9 +31,9 @@
       <div *ngFor="let category of categories">
         <div *ngIf="selectedCategories.has(category.key)">
           <label for="slider-{{category.key}}" class="form-label"><b>{{category.name}}</b></label>
-          <input type="range" class="form-range" id="slider-{{category.key}}" min="0" max="10"
+          <input type="range" class="form-range" id="slider-{{category.key}}" min="0" max="9"
                  [(ngModel)]="timeSpent[category.key].hours" (ngModelChange)="setHours(category.key, $event)">
-          <div class="text-center">{{timeSpent[category.key].hours || 0}} hour(s) per week</div>
+          <div class="text-center">{{timeSpent[category.key].hours+1 || 1}} hour(s) per week</div>
         </div>
       </div>
         

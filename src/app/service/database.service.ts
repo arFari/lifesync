@@ -44,6 +44,10 @@ export class DatabaseService {
   getItems() {
     return this.http.get('/api/schedule-item/list');
   }
+
+  deleteItem(data: String) {
+    return this.http.delete("/api/schedule-item/delete/" +data);
+  }
   getUndoneItems() {
     return this.http.get('/api/schedule-item/list/not-done');
   }

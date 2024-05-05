@@ -17,7 +17,7 @@ import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {
-    path: 'CreateTime',
+    path: 'create-time',
     component: CreateTimeComponent,
     title: 'Create Timetable',
   },

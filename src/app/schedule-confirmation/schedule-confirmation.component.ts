@@ -10,16 +10,16 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class ScheduleConfirmationComponent {
   EventData = {
     name: "",
-    priority: 1, 
+    priority: 1,
     date: new Date(),
-    user_id: "66354042e45dbbb4e19f0bab", 
+    user_id: "66354042e45dbbb4e19f0bab",
     points: 10,
     reminder: false,
     categories: '',
     duration: 0
   };
   currentUserId = "";
-  constructor(private dbService: DatabaseService, private router: Router) {}
+  constructor(private dbService: DatabaseService, private router: Router) { }
 
   item: any;
   items: any[] = [];
@@ -130,7 +130,7 @@ export class ScheduleConfirmationComponent {
   }
 
   randomPriority() {
-    let temparr = [0,1,2];
+    let temparr = [0, 1, 2];
     return temparr[Math.floor(Math.random() * 2)];
   }
 
@@ -164,19 +164,33 @@ export class ScheduleConfirmationComponent {
 
   async confirmSchedule() {
     try {
-      console.log(this.items);
-      this.items.forEach(item => {
-        this.dbService.addItems(item).subscribe((result: any) => {
-          this.router.navigate(['']);
-          console.log(result)
-        },
-          (error: HttpErrorResponse) => {
-            if (error.status === 400) {
-              console.error("404", error);
-            } else {
-              console.error(error);
-            }
-          });
+      let currItems: any[] = [];;
+      this.dbService.getUserById(this.currentUserId).subscribe((item: any[]) => {
+        item.forEach(i => {
+          this.dbService.deleteItem(i.id).subscribe((result: any) => {
+            console.log("kedelete")
+          },
+            (error: HttpErrorResponse) => {
+              if (error.status === 400) {
+                console.error("404", error);
+              } else {
+                console.error(error);
+              }
+            });
+        });
+        this.items.forEach(item => {
+          this.dbService.addItems(item).subscribe((result: any) => {
+            this.router.navigate(['']);
+            console.log(result)
+          },
+            (error: HttpErrorResponse) => {
+              if (error.status === 400) {
+                console.error("404", error);
+              } else {
+                console.error(error);
+              }
+            });
+        });
       });
     } catch (error) {
       console.error('Error adding items: ', error);
