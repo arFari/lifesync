@@ -59,6 +59,7 @@ export class HomeComponent {
     this.getItems();
     this.getCurrentProgress();
     this.getTodayTasks();
+    this.getPreference();
     this.currentDayIndex = new Date().getDay(); // 0 for Sunday, 1 for Monday, etc.
     this.currentTimeIndex = new Date().getHours(); // 0 to 23 for hours
   }
