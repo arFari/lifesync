@@ -67,7 +67,7 @@ export class RegisterComponent {
     let res = this.collectiblesPaths[randomIndex];
     this.databaseService.updateReward({
       id: id, 
-      res: res
+      reward: res
     }).subscribe({
       next: (response) => {
         // Handle the successful update here

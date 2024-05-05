@@ -110,6 +110,8 @@ export class HomeComponent {
     this.modalElement.nativeElement.classList.remove('show');
     this.modalElement.nativeElement.style.display = 'none';
     this.getCurrentProgress();
+    this.randomCollectibles(this.currentUserId);
+    this.getPreference();
     console.log("masuk func");
   }
 
@@ -117,11 +119,12 @@ export class HomeComponent {
     let randomIndex;
     let res;
     do {
+      console.log("here")
       randomIndex = Math.floor(Math.random() * this.collectiblesPaths.length);
       res = this.collectiblesPaths[randomIndex];
       this.dbService.updateReward({
         id: id, 
-        res: res
+        reward: res
       }).subscribe({
         next: (response) => {
           // Handle the successful update here
@@ -250,7 +253,23 @@ export class HomeComponent {
           }
         }
       );
-      this.randomCollectibles(this.currentUserId);
+      let res2 = this.dbService
+      .addCollectible({
+        id: this.currentUserId,
+        collectible: this.user.reward,
+      })
+      .subscribe(
+        () => {
+          console.log('points deducted');
+          this.getCurrentProgress;
+          console.log(this.progress);
+        },
+        (error) => {
+          console.log(error);
+          if (error.status === 400) {
+          }
+        }
+      );
   }
 
   formatDate(dateString: string): string {

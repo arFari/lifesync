@@ -81,4 +81,7 @@ export class DatabaseService {
   updateReward(data: any) {
     return this.http.put(`/api/user/update-reward`, data, httpOptions);
   }
+  addCollectible(data: any) {
+    return this.http.put(`/api/user/add-collectible`, data, httpOptions);
+  }
 }
