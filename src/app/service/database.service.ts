@@ -20,6 +20,11 @@ export class DatabaseService {
     return this.http.put(`/api/user/update`, body, httpOptions);
   }
 
+  updateItem(data: any) {
+    console.log(data);
+    return this.http.put<any>('/api/schedule-item/update', data, httpOptions);
+  }
+
   // In DatabaseService
   updateTimeSpent(
     userId: string,
@@ -33,9 +38,14 @@ export class DatabaseService {
       httpOptions
     );
   }
-
+  getTodayTasks(userId: string) {
+    return this.http.get<any>(`/api/schedule-item/dayTracker/${userId}`);
+  }
   getItems() {
     return this.http.get('/api/schedule-item/list');
+  }
+  getUndoneItems() {
+    return this.http.get('/api/schedule-item/list/not-done');
   }
   addItems(data: any) {
     return this.http.post<any>('/api/schedule-item/add', data, httpOptions);
@@ -47,9 +57,21 @@ export class DatabaseService {
     return this.http.get<any>(`/api/schedule-item/id/${userId}`);
   }
   login(username: string, password: string): Observable<any> {
-    return this.http.post<any>('api/user/login', {username, password}, httpOptions);
+    return this.http.post<any>(
+      'api/user/login',
+      { username, password },
+      httpOptions
+    );
   }
   register(username: string, password: string, name: string): Observable<any> {
-    return this.http.post<any>('api/user/register', {username, password, name}, httpOptions);
+    return this.http.post<any>(
+      'api/user/register',
+      { username, password, name },
+      httpOptions
+    );
+  }
+  addScore(data: any) {
+    console.log(data);
+    return this.http.put<any>('/api/user/add-score', data, httpOptions);
   }
 }

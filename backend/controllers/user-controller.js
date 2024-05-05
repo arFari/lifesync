@@ -83,7 +83,7 @@ module.exports = {
         return res.status(404).json({ status: 'nothing changes' });
       }
 
-      res.json({ status: 'Update successful' });
+      res.status(200).json({ status: 'Update successful' });
     } catch (error) {
       if (error instanceof mongoose.Error.ValidationError) {
 				res.status(400).json({ error: 'Invalid user data' });
@@ -95,14 +95,14 @@ module.exports = {
 
   updateCategories: async function (req, res) {
     try {
-      const {id, categories,startTime} = req.body;
+      const {id, categories} = req.body;
 
       var cats = categories.split(",");
 
       const user = await User.updateOne(
         { _id: id },
         { 
-            $push: { categories: cats },
+            $set: { categories: cats },
             
         },
         { new: false }

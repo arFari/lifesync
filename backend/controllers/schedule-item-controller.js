@@ -26,7 +26,29 @@ module.exports = {
       }
     }
   },
+// Controller to retrieve items with the same date as today
+getItemsWithSameDateAsToday: async function(req,res){
+  try {
+    // Get the current date
+    const today = new Date();
+    // Set the time to start of the day (midnight)
+    today.setHours(0, 0, 0, 0);
+    const userId = req.params.userId;
 
+    // Query items with the same date as today
+    const items = await Item.find({ user_id: userId, 
+      date: {
+        $gte: today, // Greater than or equal to the start of today
+        $lt: new Date(today.getTime() + 24 * 60 * 60 * 1000) // Less than tomorrow
+      }, done: false
+    });
+
+    res.json(items);
+  } catch (error) {
+    console.error('Error retrieving items:', error);
+    res.status(500).json({ error: 'Failed to retrieve items' });
+  }
+},
   listItems: async function (req, res) {
     try {
       const schItems = await Item.find();
@@ -48,6 +70,17 @@ module.exports = {
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Failed to get item' });
+    }
+  },
+
+  listNotDoneItems: async function (req, res) {
+    try {
+      const schItems = await Item.find({  done: false });
+
+      res.json(schItems);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Failed to list items' });
     }
   },
 
@@ -80,7 +113,7 @@ module.exports = {
 
   updateItem: async function (req, res) {
     try {
-      const {id, name, date, user_id, priority, reminder, points} = req.body;
+      const {id, name, date, user_id, priority, reminder, points, done} = req.body;
 
       const schItem = await Item.updateOne(
         { id: id },
@@ -91,6 +124,7 @@ module.exports = {
           points: points,
           priority: priority,
           reminder: reminder,
+          done: done
         },
         { new: false }
       );

@@ -28,6 +28,10 @@ const itemSchema = mongoose.Schema({
     reminder: {
 		type: Boolean
 	},
+	done:{
+		type:Boolean,
+		default:false
+	},
 	categories: {
 		type: [String]
 	},
