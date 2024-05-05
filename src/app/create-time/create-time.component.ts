@@ -118,7 +118,7 @@ export class CreateTimeComponent {
         }
       );
 
-    this.router.navigate(['/schedule-confirmation']);
+    this.router.navigate(['/confirmation']);
   }
   // Inside your component class
   startTime: number = 8; // Default start time
