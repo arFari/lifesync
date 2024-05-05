@@ -15,15 +15,20 @@
     .no-padding {
       padding: 0;
     }
-
-    .no-padding {
-      padding: 0;
-    }
   </style>
 </head>
 
 <body ng-app="calendarApp" ng-controller="calendarCtrl">
   <div class="container">
+    <div class="row">
+      <div class="col-6 d-flex justify-content-end" style="border-radius: 30px; margin: 20px;">
+        <button class="btn btn-success" routerLink="/generate" style="width: 100%; border-radius: 100px;padding: 15px; background-color: #b86434">Generate Schedule</button>
+    </div>
+    <div class="col-6 d-flex justify-content-end" style="border-radius: 30px; margin: 20px;">
+        <button class="btn btn-success" routerLink="/add" style="width: 100%; border-radius: 100px;padding: 15px;background-color: #b86434">Add Event to Schedule</button>
+    </div>    
+    </div>
+    
     <div class="row rounded-div mb-3" style="background-color: white;">
       <div class="col-12">
         <!-- Weekly Timetable -->

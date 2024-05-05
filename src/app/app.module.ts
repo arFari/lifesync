@@ -16,26 +16,14 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
-  {
-    path: 'create-time',
-    component: CreateTimeComponent,
-    title: 'Create Timetable',
-  },
-  {
-    path: 'collectibles',
-    component: CollectiblesComponent,
-    title: 'Collectibles',
-  },
-  { path: 'add', component: AddItemsComponent, title: 'Add Event' },
-  { path: 'test', component: HomeComponent, title: 'Time' },
-  { path: 'login', component: LoginComponent, title: 'Login' },
-  { path: 'register', component: RegisterComponent, title: 'Register' },
-  {
-    path: 'schedule-confirmation',
-    component: ScheduleConfirmationComponent,
-    title: 'Schedule Confrimation',
-  },
-  { path: '', redirectTo: '/test', pathMatch: 'full' },
+  { path: '', component: HomeComponent, title: 'LifeSync | Home' },
+  {path: 'generate',component: CreateTimeComponent,title: 'LifeSync | Generate Schedule',},
+  {path: 'profile', component: CollectiblesComponent, title: 'LifeSync | Profile ',},
+  { path: 'add', component: AddItemsComponent, title: 'LifeSync | Add Event' },
+  { path: 'login', component: LoginComponent, title: 'LifeSync | Login' },
+  { path: 'register', component: RegisterComponent, title: 'LifeSync | Register' },
+  { path: 'confirmation', component: ScheduleConfirmationComponent, title: 'LifeSync | Confrim Schedule'},
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({

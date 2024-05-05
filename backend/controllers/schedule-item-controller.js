@@ -149,10 +149,6 @@ getAllItemsByUserId: async function (req, res) {
 
     const items = await Item.find({ user_id: userId });
 
-    if (items.length === 0) {
-      return res.status(404).json({ error: 'No items found for the given user ID' });
-    }
-
     res.json(items);
   } catch (error) {
     console.error('Error fetching items for user:', userId, error);
