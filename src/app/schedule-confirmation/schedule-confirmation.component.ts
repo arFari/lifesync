@@ -171,34 +171,10 @@ export class ScheduleConfirmationComponent {
             console.log("kedelete")
           },
             (error: HttpErrorResponse) => {
-              if (error.status === 404) {
-                this.items.forEach(item => {
-                  this.dbService.addItems(item).subscribe((result: any) => {
-                    this.router.navigate(['']);
-                    console.log(result)
-                  },
-                    (error: HttpErrorResponse) => {
-                      if (error.status === 400) {
-                        console.error("404", error);
-                      } else {
-                        console.error(error);
-                      }
-                    });
-                });
+              if (error.status === 400) {
+                console.error("404", error);
               } else {
-                this.items.forEach(item => {
-                  this.dbService.addItems(item).subscribe((result: any) => {
-                    this.router.navigate(['']);
-                    console.log(result)
-                  },
-                    (error: HttpErrorResponse) => {
-                      if (error.status === 400) {
-                        console.error("404", error);
-                      } else {
-                        console.error(error);
-                      }
-                    });
-                });
+                console.error(error);
               }
             });
         });
