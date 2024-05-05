@@ -132,7 +132,7 @@
               </div>
             </div>
           <!-- <button *ngIf="progress >= 0" class="btn btn-success" (click)="show(modal)">Task Completed</button> -->
-          <button *ngIf="progress >= 100" class="btn btn-success" (click)="show(modal)">Task Completed</button>
+          <button *ngIf="progress >= 100" class="btn btn-success" (click)="show()">Task Completed</button>
         </div>
       </div>
     </div>
@@ -142,7 +142,7 @@
       <div class="modal-content" style="background-color:yellow;">
         <div class="modal-header align-items-center justify-content-centerr">
           <h5 class="modal-title">New Friend!</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="hide()"></button>
         </div>
         <div class="modal-body align-items-center justify-content-center">
           <div class="icon d-flex align-items-center justify-content-center">

@@ -1,82 +1,81 @@
 .rounded-circle {
-    border: 2px solid white; /* Adds a white border */
-    box-shadow: 0 0 5px #000; /* Optional: Adds a shadow for depth */
+  border: 2px solid white; /* Adds a white border */
+  box-shadow: 0 0 5px #000; /* Optional: Adds a shadow for depth */
 }
 .dropdown-toggle::after {
 display: none
 }
 #notificationDropdown + .dropdown-menu {
-    right: 50%;            /* Positions the right edge of the dropdown to the center of the bell icon */
-    transform: translateX(50%); /* Shifts the dropdown back to the left to truly center it */
+  right: 50%;            /* Positions the right edge of the dropdown to the center of the bell icon */
+  transform: translateX(50%); /* Shifts the dropdown back to the left to truly center it */
 }
 
 a {
-  color: black;
+color: black;
 }
 
 /* Custom styles for the header */
 .navbar-brand {
-  font-size: 24px;
-  font-weight: bold;
-  color: #000000; /* White color for the brand */
+font-size: 24px;
+font-weight: bold;
+color: #000000; /* White color for the brand */
 }
 
 .nav-link {
-  color: #000000; /* White color for the links */
-  font-weight: bold;
-  transition: color 0.3s ease; /* Smooth color transition on hover */
+color: #000000; /* White color for the links */
+font-weight: bold;
+transition: color 0.3s ease; /* Smooth color transition on hover */
 }
 
 .nav-link:hover {
-  color: #ffd700; /* Gold color on hover */
+color: #ffd700; /* Gold color on hover */
 }
 
 .navbar-toggler-icon {
-  background-color: #ffd700; /* Gold color for the toggle button icon */
+background-color: #ffd700; /* Gold color for the toggle button icon */
 }
 
 /* Styling for the dropdown menus */
 .dropdown-menu {
-  border: none;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
-  background-color: #ffffff; /* Lime green color for dropdown background */
+border: none;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+background-color: #ffffff; /* Lime green color for dropdown background */
 }
 
 .dropdown-item {
-  color: #000000; /* White color for dropdown items */
+color: #000000; /* White color for dropdown items */
 }
 
 .dropdown-item:hover {
-  background-color: goldenrod; /* Darker green background on hover */
+background-color: goldenrod; /* Darker green background on hover */
 }
 
 /* Styling for the offcanvas */
 .offcanvas-body {
-  padding: 20px;
-  background-color: #ffffff; /* Lime green color for offcanvas background */
+padding: 20px;
+background-color: #ffffff; /* Lime green color for offcanvas background */
 }
 
 .offcanvas-title {
-  font-size: 20px;
-  color: #000000; /* White color for the offcanvas title */
+font-size: 20px;
+color: #000000; /* White color for the offcanvas title */
 }
 
 .btn-close {
-  color: #000000; /* White color for the close button */
+color: #000000; /* White color for the close button */
 }
 
 .btn-close:hover {
-  color: #ffd700; /* Gold color on hover for the close button */
+color: #ffd700; /* Gold color on hover for the close button */
 }
 
 #container {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    background-image: url("/assets/game/background.png");
-    background-repeat: repeat-y;
-    background-size: 100vw 100vh;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  background-image: url("/assets/game/background.png");
+  background-repeat: repeat-y;
+  background-size: 100vw 100vh;
 }
-

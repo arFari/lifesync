@@ -1,14 +1,13 @@
 import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { DatabaseService } from '../service/database.service';
 import { Router } from '@angular/router';
-import {Modal} from 'bootstrap'
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent implements AfterViewInit {
+export class HomeComponent {
   @ViewChild('modal')
   modalElement!: ElementRef;
   constructor(private dbService: DatabaseService, private router: Router) {}
@@ -59,13 +58,6 @@ export class HomeComponent implements AfterViewInit {
     '22:00',
   ];
 
-  ngAfterViewInit() {
-    this.modalElement.nativeElement.addEventListener('hidden.bs.modal', () => {
-      this.getCurrentProgress();
-      console.log('Modal hidden event fired');
-    });
-  }
-
   async ngOnInit() {
     this.checkSessionStorage();
     this.getItems();
@@ -96,10 +88,17 @@ export class HomeComponent implements AfterViewInit {
     }
   }
 
-  show(modalElement: Element){
-    const modal=new Modal(modalElement);
-    this.claimReward();
-    modal.show();
+  show() {
+    this.claimReward(); // Call your reward logic here
+    this.modalElement.nativeElement.classList.add('show');
+    this.modalElement.nativeElement.style.display = 'block';
+  }
+
+  hide() {
+    this.modalElement.nativeElement.classList.remove('show');
+    this.modalElement.nativeElement.style.display = 'none';
+    this.getCurrentProgress();
+    console.log("masuk func");
   }
 
   onModalHidden() {
