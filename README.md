@@ -3,7 +3,18 @@
 ## How to run
 
 ### First Step
-Run "npm install" and install relevant packages needed
+Run in the terminal
+```
+npm install
+```
+and install relevant packages needed
 
 ### Second Step
-Run "ng build" and then "node server.js" to run
+Run below command in the terminal
+```
+ng build
+``` 
+to run the application use
+```
+node server.js
+```
