@@ -9,15 +9,20 @@ display: none
     right: 50%;            /* Positions the right edge of the dropdown to the center of the bell icon */
     transform: translateX(50%); /* Shifts the dropdown back to the left to truly center it */
 }
+
+a {
+  color: black;
+}
+
 /* Custom styles for the header */
 .navbar-brand {
   font-size: 24px;
   font-weight: bold;
-  color: #ffffff; /* White color for the brand */
+  color: #000000; /* White color for the brand */
 }
 
 .nav-link {
-  color: #ffffff; /* White color for the links */
+  color: #000000; /* White color for the links */
   font-weight: bold;
   transition: color 0.3s ease; /* Smooth color transition on hover */
 }
@@ -34,30 +39,30 @@ display: none
 .dropdown-menu {
   border: none;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
-  background-color: #32cd32; /* Lime green color for dropdown background */
+  background-color: #ffffff; /* Lime green color for dropdown background */
 }
 
 .dropdown-item {
-  color: #ffffff; /* White color for dropdown items */
+  color: #000000; /* White color for dropdown items */
 }
 
 .dropdown-item:hover {
-  background-color: #228b22; /* Darker green background on hover */
+  background-color: goldenrod; /* Darker green background on hover */
 }
 
 /* Styling for the offcanvas */
 .offcanvas-body {
   padding: 20px;
-  background-color: #32cd32; /* Lime green color for offcanvas background */
+  background-color: #ffffff; /* Lime green color for offcanvas background */
 }
 
 .offcanvas-title {
   font-size: 20px;
-  color: #ffffff; /* White color for the offcanvas title */
+  color: #000000; /* White color for the offcanvas title */
 }
 
 .btn-close {
-  color: #ffffff; /* White color for the close button */
+  color: #000000; /* White color for the close button */
 }
 
 .btn-close:hover {

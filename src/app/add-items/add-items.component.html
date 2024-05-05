@@ -1,20 +1,20 @@
-<div class="container">
-    <h3>Add New Event</h3>
+<div class="container rounded-5">
+    <h3 class="text-white">Add New Event</h3>
     <form (ngSubmit)="submitForm()" #eventForm="ngForm">
       <div class="form-group">
-        <label for="name">Name:</label>
+        <label class="text-white" for="name">Name:</label>
         <input type="text" class="form-control" id="name" name="name" [(ngModel)]="EventData.name" required>
       </div>
       <div class="form-group">
-        <label for="date">Date and Time:</label>
+        <label class="text-white" for="date">Date and Time:</label>
         <input type="datetime-local" class="form-control" id="date" name="date" [(ngModel)]="EventData.date" required>
       </div>
       <div class="form-group">
-        <label for="duration">Duration (Minutes):</label>
+        <label class="text-white" for="duration">Duration (Hours):</label>
         <input type="number" class="form-control" id="duration" name="duration" [(ngModel)]="EventData.duration" required>
       </div>
       <div class="form-group">
-        <label for="priority">Priority:</label>
+        <label class="text-white" for="priority">Priority:</label>
         <select class="form-control" id="priority" name="priority" [(ngModel)]="EventData.priority" required>
           <option value="0">Low</option>
           <option value="1">Medium</option>
@@ -22,10 +22,10 @@
         </select>
       </div>
       <div class="form-group">
-        <label>Category:</label>
+        <label class="text-white">Category:</label>
         <div class="category-buttons">
           <div class="category-button" *ngFor="let category of categories">
-            <button type="button" class="btn" [ngClass]="{'btn-primary': EventData.categories === category.key}" (click)="selectCategory(category.key)">
+            <button type="button" class="btn" [ngClass]="{'btn-dark': EventData.categories === category.key}" (click)="selectCategory(category.key)">
               <img [src]="category.icon" alt="{{category.name}}" class="img-fluid" style="max-height: 50px;"><br>
               <span>{{category.name}}</span>
             </button>
@@ -34,7 +34,7 @@
       </div>
       <div class="form-group form-check">
         <input type="checkbox" class="form-check-input" id="reminder" [(ngModel)]="EventData.reminder" name="reminder">
-        <label class="form-check-label" for="reminder">Enable Reminder</label>
+        <label class="form-check-label text-white" for="reminder">Enable Reminder</label>
       </div>
       <button type="submit" class="btn btn-primary" [disabled]="!eventForm.valid">Add Event</button>
     </form>

@@ -9,8 +9,7 @@
     max-width: 600px;
     padding: 20px;
     margin-bottom: 70px;
-    background-color: #fff;
-    border-radius: 8px;
+    background-color: #b86434;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   .container h2 {
@@ -60,24 +59,46 @@
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background-color: #f0f0f0;
+    background-color: #ffffff;
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
-  .category-button button:hover {
-    background-color: #e0e0e0;
+
+  .category-button button.btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
   }
+
+  .category-button button:hover {
+    background-color: goldenrod;
+  }
+
+  .category-button button.btn-dark {
+    background-color: goldenrod;
+    color: #fff;
+    /* Add more styles as needed */
+}
+
   .btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: goldenrod;
+    border-color: goldenrod;
   }
   .btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
+    background-color:rgb(203, 154, 29);
+    border-color: rgb(203, 154, 29);
   }
   .btn-primary:disabled {
-    background-color: #b3d7ff;
-    border-color: #b3d7ff;
+    background-color: rgb(223, 205, 160);
+    border-color: rgb(223, 205, 160);
     cursor: not-allowed;
+  }
+
+  .form-check-input:checked {
+    background-color: goldenrod; /* Background color when checked */
   }
 
