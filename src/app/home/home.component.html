@@ -106,8 +106,8 @@
           <!-- Daily Timetable -->
           <ul class="list-group">
             <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let task of todayTasks">
-                <span>{{ task.name }} at {{ formatDate(task.date) }}</span>
                 <input type="checkbox" class="form-check-input"  (change)="onCheckboxChange(task)">
+                <span>{{ task.name }} at {{ formatDate(task.date) }}</span>
             </li>
           </ul>
         </div>
@@ -115,13 +115,14 @@
           <img src="assets/game/leebitFront.png" alt="Leebit Front Image" class="responsive-img">
           <h5 class="custom-header"><b>Next Reward Progress</b></h5>
           <div class="custom-progress-container">
-            <div class="progress custom-progress-bar">
+            <div *ngIf="progress < 100"  class="progress custom-progress-bar">
               <div class="progress-bar progress-bar-striped bg-greene" role="progressbar" 
                    [style.width]="progress + '%'"
                    [attr.aria-valuenow]="progress" aria-valuemin="0" aria-valuemax="100">
                 {{ progress }}%
               </div>
             </div>
+            <button *ngIf="progress >= 100" class="btn btn-success" (click)="claimReward()">Task Completed</button>
             </div>
           </div>
     </div>
